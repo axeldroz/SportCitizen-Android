@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Sport Citizen</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_feed">Feed Activity</string>
+    <string name="title_feed">Feed</string>
+    <string name="title_challenges">Challenges</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_activity_challenges">ChallengesActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_activity_notifications">NotificationsActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
