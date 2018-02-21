@@ -1,5 +1,6 @@
 package com.sportcitizen.sportcitizen.adapters;
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -26,5 +27,6 @@ public class FeedAdapter extends FirebaseRecyclerAdapter<Challenge, FeedViewHold
     protected void populateViewHolder(FeedViewHolder holder, Challenge model, int position) {
             holder.setTitle(model.title);
             holder.setDescription(model.description);
+            Log.d("creator_user", model.creator_user);
     }
 }
