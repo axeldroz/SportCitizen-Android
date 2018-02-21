@@ -3,7 +3,9 @@ package com.sportcitizen.sportcitizen.viewholders;
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
@@ -22,17 +24,22 @@ public class EditProfileViewHolder {
     private View _mainView;
     private DatabaseReference _ref;
     private Activity _activity;
+    private ImageView _image;
+    private EditText _phone;
+    private EditText _bio;
+    private Spinner _favoriteSport;
 
     public EditProfileViewHolder(DatabaseReference ref, Activity activity) {
         _ref = ref;
         _activity = activity;
+        _image = _activity.findViewById(R.id.edit_profile_image);
+        _phone = _activity.findViewById(R.id.edit_profile_view_phone_edit);
+        _bio = _activity.findViewById(R.id.edit_profile_view_bio_edit);
     }
 
     public void setImage(String url) {
-        ImageView image;
         Transformation transformation;
 
-        image = _activity.findViewById(R.id.edit_profile_image);
         transformation = new RoundedTransformationBuilder()
                 .borderColor(Color.WHITE)
                 .borderWidthDp(1)
@@ -44,13 +51,22 @@ public class EditProfileViewHolder {
                 .centerCrop()
                 .fit()
                 .transform(transformation)
-                .into(image);
+                .into(_image);
     }
 
-    public void setNumber(String number) {
-        TextView text;
+    public void setBio(String bioText) {
+        _bio.setText(bioText);
+    }
 
-        text = _activity.findViewById(R.id.edit_profile_view_phone_edit);
-        text.setText(number);
+    public String getBio() {
+        return (_bio.getText().toString());
+    }
+
+    public void setPhone(String number) {
+        _phone.setText(number);
+    }
+
+    public String getPhone() {
+        return (_phone.getText().toString());
     }
 }

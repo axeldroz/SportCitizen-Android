@@ -97,4 +97,16 @@
 
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/edit_profile_save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_layout_sport" />
 </android.support.constraint.ConstraintLayout>

@@ -1,9 +1,12 @@
 package com.sportcitizen.sportcitizen.activities;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.sportcitizen.sportcitizen.R;
 import com.sportcitizen.sportcitizen.adapters.EditFavoriteSportListAdapter;
 import com.sportcitizen.sportcitizen.dbutils.EditProfileEventListener;
+import com.sportcitizen.sportcitizen.models.UserModel;
 import com.sportcitizen.sportcitizen.viewholders.EditProfileViewHolder;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -32,6 +36,7 @@ public class EditProfileActivity extends AppCompatActivity {
         setSpinnerFavoriteSport();
         holder = new EditProfileViewHolder(_dbRef, this);
         setProfileInfoListener(holder);
+        setSaveButton(holder);
     }
 
     /**
@@ -67,5 +72,26 @@ public class EditProfileActivity extends AppCompatActivity {
      */
     private void setProfileInfoListener(final EditProfileViewHolder holder) {
         _dbRef.addValueEventListener(new EditProfileEventListener(holder));
+    }
+
+    /**
+     * Set save button
+     */
+    private void setSaveButton(final EditProfileViewHolder holder) {
+        Button save;
+        final Activity activity = this;
+
+        save = findViewById(R.id.edit_profile_save_button);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserModel model = new UserModel();
+
+                model.bio = holder.getBio();
+                model.phone = holder.getPhone();
+                model.updateToDB(_dbRef);
+                activity.finish();
+            }
+        });
     }
 }

@@ -26,7 +26,8 @@ public class EditProfileEventListener implements ValueEventListener {
         // Get Post object and use the values to update the UI
         UserModel model = dataSnapshot.getValue(UserModel.class);
         _holder.setImage(model.photoURL);
-        _holder.setNumber(model.phone);
+        _holder.setPhone(model.phone);
+        _holder.setBio(model.bio);
     }
 
     @Override
