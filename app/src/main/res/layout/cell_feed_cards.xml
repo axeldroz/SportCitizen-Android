@@ -54,10 +54,10 @@
                 android:text="TextView"
                 android:textAppearance="@style/TextAppearance.AppCompat.Notification"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/cell_image_feed"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cell_image_feed"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/cell_image_feed" />
         </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>

@@ -27,6 +27,7 @@ public class FeedAdapter extends FirebaseRecyclerAdapter<Challenge, FeedViewHold
     protected void populateViewHolder(FeedViewHolder holder, Challenge model, int position) {
             holder.setTitle(model.title);
             holder.setDescription(model.description);
+            holder.setImage(model.photoURL);
             Log.d("creator_user", model.creator_user);
     }
 }
