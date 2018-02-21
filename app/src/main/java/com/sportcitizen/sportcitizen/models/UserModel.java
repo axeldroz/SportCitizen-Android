@@ -12,6 +12,7 @@ public class UserModel {
     public String photoURL;
     public String city = "";
     public long age = 0;
+    public String phone = "";
 
     public UserModel() {}
 }

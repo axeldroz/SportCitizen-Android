@@ -6,16 +6,17 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.sportcitizen.sportcitizen.models.UserModel;
+import com.sportcitizen.sportcitizen.viewholders.EditProfileViewHolder;
 import com.sportcitizen.sportcitizen.viewholders.ProfileViewHolder;
 
 /**
  * Created by Axel Drozdzynski on 21/02/2018.
  */
 
-public class ProfileEventListener implements ValueEventListener {
-    private ProfileViewHolder _holder;
+public class EditProfileEventListener implements ValueEventListener {
+    private EditProfileViewHolder _holder;
 
-    public ProfileEventListener(ProfileViewHolder holder) {
+    public EditProfileEventListener(EditProfileViewHolder holder) {
         super();
         _holder = holder;
     }
@@ -25,9 +26,7 @@ public class ProfileEventListener implements ValueEventListener {
         // Get Post object and use the values to update the UI
         UserModel model = dataSnapshot.getValue(UserModel.class);
         _holder.setImage(model.photoURL);
-        _holder.setName(model.name);
-        _holder.setCityAndAge(model.city, model.age);
-        _holder.setFavoriteSport(model.favoriteSport);
+        _holder.setNumber(model.phone);
     }
 
     @Override

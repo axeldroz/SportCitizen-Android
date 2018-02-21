@@ -6,4 +6,95 @@
     android:layout_height="match_parent"
     tools:context="com.sportcitizen.sportcitizen.activities.EditProfileActivity">
 
+    <ImageView
+        android:id="@+id/edit_profile_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_profile" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Change Image"
+        app:layout_constraintEnd_toEndOf="@+id/edit_profile_image"
+        app:layout_constraintStart_toStartOf="@+id/edit_profile_image"
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_image" />
+
+    <LinearLayout
+        android:id="@+id/edit_profile_layout_bio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/button2">
+
+        <TextView
+            android:id="@+id/edit_profile_view_bio_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bio" />
+
+        <EditText
+            android:id="@+id/edit_profile_view_bio_edit"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:ems="10"
+            android:inputType="textMultiLine" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/edit_profile_layout_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_layout_bio">
+
+        <TextView
+            android:id="@+id/edit_profile_view_phone_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone Number" />
+
+        <EditText
+            android:id="@+id/edit_profile_view_phone_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="phone" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/edit_profile_layout_sport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_layout_phone"
+        tools:layout_editor_absoluteX="0dp">
+
+        <TextView
+            android:id="@+id/edit_profile_view_sport_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Favorite Sport" />
+
+        <Spinner
+            android:id="@+id/edit_profile_view_sport_spinner"
+            android:layout_width="202dp"
+            android:layout_height="wrap_content"></Spinner>
+
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
