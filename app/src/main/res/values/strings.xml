@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Sport Citizen</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Sport Citizen</string>
     <string name="title_activity_feed">Feed Activity</string>
     <string name="title_feed">Feed</string>
     <string name="title_challenges">Challenges</string>

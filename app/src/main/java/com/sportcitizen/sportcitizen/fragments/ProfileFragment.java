@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.sportcitizen.sportcitizen.R;
 import com.sportcitizen.sportcitizen.activities.EditProfileActivity;
 import com.sportcitizen.sportcitizen.activities.MainActivity;
+import com.sportcitizen.sportcitizen.dbutils.ProfileEventListener;
 import com.sportcitizen.sportcitizen.models.UserModel;
 import com.sportcitizen.sportcitizen.viewholders.ProfileViewHolder;
 
@@ -153,27 +154,7 @@ public class ProfileFragment extends Fragment {
      * Set listener which manage profile info
      */
     private void setProfileInfoListener(final ProfileViewHolder holder) {
-        ValueEventListener postListener;
-
-        postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                UserModel model = dataSnapshot.getValue(UserModel.class);
-                holder.setImage(model.photoURL);
-                holder.setName(model.name);
-                holder.setCityAndAge(model.city, model.age);
-                holder.setFavoriteSport(model.favoriteSport);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w("OnCancelled", "loadPost:onCancelled", databaseError.toException());
-                // ...
-            }
-        };
-        _dbRef.addValueEventListener(postListener);
+        _dbRef.addValueEventListener(new ProfileEventListener(holder));
     }
 
     /**
