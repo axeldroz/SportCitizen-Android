@@ -7,6 +7,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.sportcitizen.sportcitizen.R;
 import com.sportcitizen.sportcitizen.models.Challenge;
+import com.sportcitizen.sportcitizen.viewholders.FeedViewHolder;
 
 /**
  * Created by Axel Drozdzynski on 20/02/2018.

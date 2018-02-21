@@ -1,4 +1,4 @@
-package com.sportcitizen.sportcitizen.adapters;
+package com.sportcitizen.sportcitizen.viewholders;
 
 import android.content.Context;
 import android.graphics.Color;

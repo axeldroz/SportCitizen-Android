@@ -4,11 +4,21 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.sportcitizen.sportcitizen.R;
+import com.sportcitizen.sportcitizen.models.UserModel;
+import com.sportcitizen.sportcitizen.viewholders.ProfileViewHolder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +39,13 @@ public class ProfileFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mDatabaseRef;
+    private FirebaseUser _user;
+    private DatabaseReference _dbRef;
+
+    public ProfileViewHolder _holder;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -59,13 +76,18 @@ public class ProfileFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        initDatabaseRef();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view;
+
+        view = inflater.inflate(R.layout.fragment_profile, container, false);
+        _holder = new ProfileViewHolder(view, _dbRef, this.getActivity());
+        setProfileInfoListener(_holder);
+        return (view);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -99,5 +121,50 @@ public class ProfileFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    /**
+     * Initalise firebase
+     */
+    private void initDatabaseRef() {
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+        _user = FirebaseAuth.getInstance().getCurrentUser();
+        try {
+            mDatabase = FirebaseDatabase.getInstance();
+        }catch (Exception e) {
+            Log.d("Exception", e.getMessage());
+        }
+        mDatabaseRef = mDatabase.getReference();
+        _dbRef = mDatabase.getReference("users").child(_user.getUid());
+    }
+
+    /**
+     * Set listener which manage profile info
+     */
+    private void setProfileInfoListener(final ProfileViewHolder holder) {
+        ValueEventListener postListener;
+
+        postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                UserModel model = dataSnapshot.getValue(UserModel.class);
+                holder.setImage(model.photoURL);
+                holder.setName(model.name);
+                holder.setCityAndAge(model.city, model.age);
+                holder.setFavoriteSport(model.favoriteSport);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("OnCancelled", "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+        _dbRef.addValueEventListener(postListener);
     }
 }
