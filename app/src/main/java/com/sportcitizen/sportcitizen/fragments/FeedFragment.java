@@ -1,14 +1,24 @@
 package com.sportcitizen.sportcitizen.fragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.sportcitizen.sportcitizen.R;
+import com.sportcitizen.sportcitizen.adapters.FeedAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,7 +29,6 @@ import com.sportcitizen.sportcitizen.R;
  * create an instance of this fragment.
  */
 public class FeedFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -30,9 +39,13 @@ public class FeedFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public FeedFragment() {
-        // Required empty public constructor
-    }
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mDatabaseRef;
+    private FirebaseUser _user;
+    private DatabaseReference _dbRef;
+
+    /* required empty constructor */
+    public FeedFragment() {}
 
     /**
      * Use this factory method to create a new instance of
@@ -42,7 +55,6 @@ public class FeedFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment FeedFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static FeedFragment newInstance(String param1, String param2) {
         FeedFragment fragment = new FeedFragment();
         Bundle args = new Bundle();
@@ -59,13 +71,34 @@ public class FeedFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        _user = FirebaseAuth.getInstance().getCurrentUser();
+        try {
+            mDatabase = FirebaseDatabase.getInstance();
+        }catch (Exception e) {
+            Log.d("Exception", e.getMessage());
+        }
+        mDatabaseRef = mDatabase.getReference();
+        _dbRef = mDatabase.getReference("challenges");
     }
 
+    /**
+     * Instanciate fragment layout with recycler
+     * And initialise recyclerView
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_feed, container, false);
+        View view;
+        RecyclerView recyclerView;
+        DatabaseReference ref;
+
+        ref = _dbRef;
+        view = inflater.inflate(R.layout.fragment_feed, container, false);
+        recyclerView = view.findViewById(R.id.feed_recycler_view);
+        recyclerView.setBackgroundColor(Color.BLUE);
+        recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 1));
+        recyclerView.setAdapter(new FeedAdapter(ref, this.getActivity()));
+        return (view);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

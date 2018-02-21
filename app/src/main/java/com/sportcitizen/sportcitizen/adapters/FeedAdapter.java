@@ -17,13 +17,14 @@ public class FeedAdapter extends FirebaseRecyclerAdapter<Challenge, FeedViewHold
     private LayoutInflater _layoutinflater;
     private Activity _context;
 
-    FeedAdapter(DatabaseReference ref, Activity context) {
+    public FeedAdapter(DatabaseReference ref, Activity context) {
         super(Challenge.class, R.layout.cell_feed_cards, FeedViewHolder.class, ref);
         _context = context;
     }
 
     @Override
-    protected void populateViewHolder(FeedViewHolder viewHolder, Challenge model, int position) {
-
+    protected void populateViewHolder(FeedViewHolder holder, Challenge model, int position) {
+            holder.setTitle(model.title);
+            holder.setDescription(model.description);
     }
 }
