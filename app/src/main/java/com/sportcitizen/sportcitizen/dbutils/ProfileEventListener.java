@@ -28,6 +28,7 @@ public class ProfileEventListener implements ValueEventListener {
         _holder.setName(model.name);
         _holder.setCityAndAge(model.city, model.age);
         _holder.setFavoriteSport(model.favoriteSport);
+        _holder.setBio(model.bio);
     }
 
     @Override

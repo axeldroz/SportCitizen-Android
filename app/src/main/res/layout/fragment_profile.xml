@@ -69,14 +69,48 @@
             <Button
                 android:id="@+id/profile_view_edit_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="24dp"
                 android:text="Edit Profile"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_view_favorite_sport"
+                app:layout_constraintTop_toBottomOf="@+id/profile_view_bio"
                 tools:layout_editor_absoluteX="0dp" />
+
+            <TextView
+                android:id="@+id/profile_view_bio"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:text="Bio"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/profile_view_city_age"
+                app:layout_constraintStart_toStartOf="@+id/profile_view_city_age"
+                app:layout_constraintTop_toBottomOf="@+id/profile_view_favorite_sport" />
+
+            <ImageView
+                android:id="@+id/quote1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="8dp"
+                android:adjustViewBounds="false"
+                android:src="@drawable/ic_quoteleft"
+                app:layout_constraintBottom_toBottomOf="@+id/profile_view_bio"
+                app:layout_constraintEnd_toStartOf="@+id/profile_view_bio"
+                app:layout_constraintTop_toTopOf="@+id/profile_view_bio" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="24dp"
+                android:src="@drawable/ic_quoteright"
+                app:layout_constraintBottom_toBottomOf="@+id/profile_view_bio"
+                app:layout_constraintStart_toEndOf="@+id/profile_view_bio"
+                app:layout_constraintTop_toTopOf="@+id/profile_view_bio" />
 
         </android.support.constraint.ConstraintLayout>
 

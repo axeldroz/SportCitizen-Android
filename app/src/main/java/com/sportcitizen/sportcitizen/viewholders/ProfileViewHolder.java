@@ -70,4 +70,11 @@ public class ProfileViewHolder {
         text = _mainView.findViewById(R.id.profile_view_favorite_sport);
         text.setText(sport);
     }
+
+    public void setBio(String bio) {
+        TextView text;
+
+        text = _mainView.findViewById(R.id.profile_view_bio);
+        text.setText(bio);
+    }
 }
