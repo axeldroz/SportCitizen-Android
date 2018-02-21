@@ -100,7 +100,10 @@ public class LoginActivity extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         ref = mDatabase.getReference("users").child(user.getUid());
         model.email = user.getEmail();
-        model.photoURL = user.getPhotoUrl().toString();
+        if (!user.getProviderData().isEmpty() && user.getProviderData().size() > 1)
+            model.photoURL = "https://graph.facebook.com/" + user.getProviderData().get(1).getUid() + "/picture?type=large";
+        else
+            model.photoURL = user.getPhotoUrl().toString();
         model.age = 23; // we'll need to get from facebook
         model.city = "Bordeaux 2"; // we'll need to get from location
 
