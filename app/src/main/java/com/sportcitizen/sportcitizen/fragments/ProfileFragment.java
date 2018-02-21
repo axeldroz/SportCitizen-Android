@@ -1,6 +1,8 @@
 package com.sportcitizen.sportcitizen.fragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sportcitizen.sportcitizen.R;
+import com.sportcitizen.sportcitizen.activities.EditProfileActivity;
+import com.sportcitizen.sportcitizen.activities.MainActivity;
 import com.sportcitizen.sportcitizen.models.UserModel;
 import com.sportcitizen.sportcitizen.viewholders.ProfileViewHolder;
 
@@ -83,10 +88,13 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view;
+        Button edit;
 
         view = inflater.inflate(R.layout.fragment_profile, container, false);
+        edit = view.findViewById(R.id.profile_view_edit_button);
         _holder = new ProfileViewHolder(view, _dbRef, this.getActivity());
         setProfileInfoListener(_holder);
+        addNavigationOnButton(edit);
         return (view);
     }
 
@@ -166,5 +174,20 @@ public class ProfileFragment extends Fragment {
             }
         };
         _dbRef.addValueEventListener(postListener);
+    }
+
+    /**
+     * set listener for button
+     */
+    private void addNavigationOnButton(Button button) {
+        final Activity activity = this.getActivity();
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, EditProfileActivity.class);
+                activity.startActivity(intent);
+            }
+        });
     }
 }
