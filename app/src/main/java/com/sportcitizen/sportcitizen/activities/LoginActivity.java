@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sportcitizen.sportcitizen.R;
+import com.sportcitizen.sportcitizen.models.UserModel;
 
 import java.util.Arrays;
 import java.util.List;
@@ -66,11 +67,10 @@ public class LoginActivity extends AppCompatActivity {
                 }catch (Exception e) {
                     Log.d("Exception", e.getMessage());
                 }
-                mDatabaseRef = mDatabase.getReference();
-                DatabaseReference ref = mDatabase.getReference("users").child(user.getUid());
-                ref.child("connected").setValue("OK");
+                setInfoOnDB();
                 Intent intent = new Intent(this, MainActivity.class);
                 this.startActivity(intent);
+                this.finish();
             } else {
 
             }
@@ -85,6 +85,38 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    /**
+     * Useful for first connexion
+     * And when facebook info has been updated
+     */
+    public void setInfoOnDB() {
+        FirebaseUser user;
+        UserModel model;
+        DatabaseReference ref;
+
+        model = new UserModel();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        ref = mDatabase.getReference("users").child(user.getUid());
+        model.email = user.getEmail();
+        model.photoURL = user.getPhotoUrl().toString();
+        model.age = 23; // we'll need to get from facebook
+        model.city = "Bordeaux 2"; // we'll need to get from location
+
+        ref.child("email").setValue(model.email);
+        ref.child("photoURL").setValue(model.photoURL);
+        ref.child("age").setValue(model.age); // we'll need to get from facebook
+        ref.child("city").setValue(model.city); // we'll need to get from location
+    }
+
+    private class CustomUserModel {
+        public String email = "";
+        public String photoURL = "";
+        public long age = 0;
+        public String city = "";
+
+        public CustomUserModel(){}
     }
 
 }
