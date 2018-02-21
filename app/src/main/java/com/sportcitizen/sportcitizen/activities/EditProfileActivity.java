@@ -25,6 +25,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private DatabaseReference _databaseRef;
     private FirebaseUser _user;
     private DatabaseReference _dbRef;
+    private Spinner _spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +44,13 @@ public class EditProfileActivity extends AppCompatActivity {
      * set spinner row with Database
      */
     private void setSpinnerFavoriteSport() {
-        Spinner spinner;
         DatabaseReference ref;
         EditFavoriteSportListAdapter adapter;
 
-        spinner = findViewById(R.id.edit_profile_view_sport_spinner);
+        _spinner = findViewById(R.id.edit_profile_view_sport_spinner);
         ref = _databaseRef.child("sports");
         adapter = new EditFavoriteSportListAdapter(this, String.class, R.layout.support_simple_spinner_dropdown_item, ref);
-        spinner.setAdapter(adapter);
+        _spinner.setAdapter(adapter);
     }
 
     /**
@@ -89,6 +89,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 model.bio = holder.getBio();
                 model.phone = holder.getPhone();
+                model.favoriteSport = _spinner.getSelectedItem().toString();
                 model.updateToDB(_dbRef);
                 activity.finish();
             }
