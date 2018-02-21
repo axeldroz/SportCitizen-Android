@@ -60,7 +60,7 @@ public class ProfileViewHolder {
         String str;
 
         text = _mainView.findViewById(R.id.profile_view_city_age);
-        str = city + " | " + age + " years old";
+        str = city + "   |   " + age + " years old";
         text.setText(str);
     }
 
