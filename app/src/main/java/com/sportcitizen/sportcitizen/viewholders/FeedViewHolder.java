@@ -104,4 +104,8 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
     public void setBackgroundColor(int color) {
         _view.setBackgroundColor(color);
     }
+
+    public View getView() {
+        return (_view);
+    }
 }

@@ -3,10 +3,13 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.sportcitizen.sportcitizen.R;
+import com.sportcitizen.sportcitizen.activities.MainActivity;
+import com.sportcitizen.sportcitizen.fragments.ChallengeViewFragment;
 import com.sportcitizen.sportcitizen.models.Challenge;
 import com.sportcitizen.sportcitizen.viewholders.FeedViewHolder;
 
@@ -34,6 +37,12 @@ public class FeedAdapter extends FirebaseRecyclerAdapter<Challenge, FeedViewHold
             holder.setDay(model.time);
             holder.setTime(model.time);
             holder.setBackgroundColor(Color.parseColor("#efe7e0"));
+            holder.getView().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((MainActivity)_context).loadFragment(new ChallengeViewFragment());
+                }
+            });
             Log.d("creator_user", model.creator_user);
     }
 }
