@@ -93,7 +93,7 @@ public class ProfileFragment extends Fragment {
         Button edit;
 
         view = inflater.inflate(R.layout.fragment_profile, container, false);
-        view.setBackgroundColor(Color.parseColor("#efe7e0"));
+        //view.setBackgroundColor(Color.parseColor("#efe7e0"));
         edit = view.findViewById(R.id.profile_view_edit_button);
         _holder = new ProfileViewHolder(view, _dbRef, this.getActivity());
         setProfileInfoListener(_holder);
