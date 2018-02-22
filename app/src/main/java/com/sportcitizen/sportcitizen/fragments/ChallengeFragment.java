@@ -1,14 +1,19 @@
 package com.sportcitizen.sportcitizen.fragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.sportcitizen.sportcitizen.R;
+import com.sportcitizen.sportcitizen.activities.CreateChallengeActivity;
+import com.sportcitizen.sportcitizen.activities.EditProfileActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,6 +88,18 @@ public class ChallengeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void initTitleBar() {
+        ImageView option = this.getActivity().findViewById(R.id.titlebar_button_right);
+
+        option.setVisibility(View.GONE);
+        option.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     /**

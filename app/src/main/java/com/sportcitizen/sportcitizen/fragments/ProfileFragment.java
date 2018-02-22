@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -98,6 +99,7 @@ public class ProfileFragment extends Fragment {
         _holder = new ProfileViewHolder(view, _dbRef, this.getActivity());
         setProfileInfoListener(_holder);
         addNavigationOnButton(edit);
+        initTitleBar();
         return (view);
     }
 
@@ -157,6 +159,21 @@ public class ProfileFragment extends Fragment {
      */
     private void setProfileInfoListener(final ProfileViewHolder holder) {
         _dbRef.addValueEventListener(new ProfileEventListener(holder));
+    }
+
+    /**
+     * initialise option button on titlebar
+     */
+    public void initTitleBar() {
+        ImageView option = this.getActivity().findViewById(R.id.titlebar_button_right);
+
+        option.setVisibility(View.GONE);
+        option.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     /**

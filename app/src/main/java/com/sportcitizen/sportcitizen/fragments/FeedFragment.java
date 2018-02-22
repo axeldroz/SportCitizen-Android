@@ -2,6 +2,7 @@ package com.sportcitizen.sportcitizen.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,12 +14,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sportcitizen.sportcitizen.R;
+import com.sportcitizen.sportcitizen.activities.CreateChallengeActivity;
 import com.sportcitizen.sportcitizen.adapters.FeedAdapter;
 
 /**
@@ -92,16 +95,28 @@ public class FeedFragment extends Fragment {
         View view;
         RecyclerView recyclerView;
         DatabaseReference ref;
-        int color;
 
         ref = _dbRef;
-        //color = Color.parseColor("#efe7e0");
         view = inflater.inflate(R.layout.fragment_feed, container, false);
         recyclerView = view.findViewById(R.id.feed_recycler_view);
-        //recyclerView.setBackgroundColor(color);
+        initTitleBar();
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 1));
         recyclerView.setAdapter(new FeedAdapter(ref, this.getActivity()));
         return (view);
+    }
+
+    public void initTitleBar() {
+        ImageView option = this.getActivity().findViewById(R.id.titlebar_button_right);
+        final Activity activity = this.getActivity();
+
+        option.setVisibility(View.VISIBLE);
+        option.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, CreateChallengeActivity.class);
+                activity.startActivity(intent);
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
