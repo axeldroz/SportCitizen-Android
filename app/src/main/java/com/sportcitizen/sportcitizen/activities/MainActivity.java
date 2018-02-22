@@ -149,11 +149,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case 4:
                 fragment = new ChallengeViewFragment();
+                break;
 
             default:
                 return (false);
         }
-        menuItem = menu.getItem(id);
+        if (id < 4)
+            menuItem = menu.getItem(id);
         return (loadFragment(fragment));
     }
 
@@ -173,5 +175,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         else
             back(menuItem);
         Log.d("List of Item : ", "size = " + _previousItems.size());
+    }
+
+    public Menu getMenu() {
+        return (menu);
     }
 }

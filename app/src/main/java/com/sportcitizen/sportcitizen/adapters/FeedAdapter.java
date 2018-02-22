@@ -3,6 +3,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -40,7 +41,9 @@ public class FeedAdapter extends FirebaseRecyclerAdapter<Challenge, FeedViewHold
             holder.getView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((MainActivity)_context).loadFragment(new ChallengeViewFragment());
+                    MenuItem item = ((MainActivity)_context).getMenu().getItem(0);
+                    ((MainActivity)_context).addItemInStack(item);
+                    ((MainActivity)_context).back(4);
                 }
             });
             Log.d("creator_user", model.creator_user);
