@@ -29,6 +29,9 @@ public class FeedAdapter extends FirebaseRecyclerAdapter<Challenge, FeedViewHold
             holder.setTitle(model.title);
             holder.setDescription(model.description);
             holder.setImage(model.photoURL);
+            holder.setLocation(model.location);
+            holder.setDay(model.time);
+            holder.setTime(model.time);
             Log.d("creator_user", model.creator_user);
     }
 }

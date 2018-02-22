@@ -27,7 +27,6 @@ public class EditProfileViewHolder {
     private ImageView _image;
     private EditText _phone;
     private EditText _bio;
-    private Spinner _favoriteSport;
 
     public EditProfileViewHolder(DatabaseReference ref, Activity activity) {
         _ref = ref;

@@ -46,18 +46,48 @@
             <TextView
                 android:id="@+id/cell_text_description"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginBottom="8dp"
+                android:layout_height="54dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
                 android:textAppearance="@style/TextAppearance.AppCompat.Notification"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/cell_image_feed"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cell_image_feed"
                 app:layout_constraintTop_toTopOf="@+id/cell_image_feed" />
+
+            <TextView
+                android:id="@+id/cell_feed_text_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:text="Bordeaux"
+                app:layout_constraintStart_toEndOf="@+id/cell_image_feed"
+                app:layout_constraintTop_toBottomOf="@+id/cell_text_description" />
+
+            <TextView
+                android:id="@+id/cell_feed_text_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Friday"
+                app:layout_constraintEnd_toStartOf="@+id/cell_feed_text_time"
+                app:layout_constraintStart_toEndOf="@+id/cell_feed_text_location"
+                app:layout_constraintTop_toBottomOf="@+id/cell_text_description" />
+
+            <TextView
+                android:id="@+id/cell_feed_text_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:text="6:00pm"
+                app:layout_constraintEnd_toEndOf="@+id/cell_text_description"
+                app:layout_constraintTop_toBottomOf="@+id/cell_text_description" />
         </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>

@@ -11,7 +11,7 @@ public class Challenge {
     public String location = "";
     public String photoURL = "";
     public String sport = "";
-    public String timer = "";
+    public String time = "";
     public String title = "";
 
 
