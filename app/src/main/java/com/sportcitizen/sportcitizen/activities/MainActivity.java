@@ -3,6 +3,7 @@ package com.sportcitizen.sportcitizen.activities;
 import android.app.Activity;
 //import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.sportcitizen.sportcitizen.R;
@@ -19,6 +21,7 @@ import com.sportcitizen.sportcitizen.fragments.NotificationsFragment;
 import com.sportcitizen.sportcitizen.fragments.ProfileFragment;
 
 import android.support.v4.app.Fragment;
+import android.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
@@ -44,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.main_toolbar);
+        toolbar.setTitle("Sport Citizen");
+        toolbar.setBackgroundColor(Color.parseColor("#d0b5a4"));
         navigation = findViewById(R.id.navigation);
         menu = navigation.getMenu();
         navigation.setOnNavigationItemSelectedListener(this);
