@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,11 +92,13 @@ public class FeedFragment extends Fragment {
         View view;
         RecyclerView recyclerView;
         DatabaseReference ref;
+        int color;
 
         ref = _dbRef;
+        //color = Color.parseColor("#efe7e0");
         view = inflater.inflate(R.layout.fragment_feed, container, false);
         recyclerView = view.findViewById(R.id.feed_recycler_view);
-        recyclerView.setBackgroundColor(Color.BLUE);
+        //recyclerView.setBackgroundColor(color);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 1));
         recyclerView.setAdapter(new FeedAdapter(ref, this.getActivity()));
         return (view);

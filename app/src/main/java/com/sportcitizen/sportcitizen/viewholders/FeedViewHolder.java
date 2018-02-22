@@ -100,4 +100,8 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
         text = _view.findViewById(R.id.cell_feed_text_time);
         text.setText(getTime((long)nb));
     }
+
+    public void setBackgroundColor(int color) {
+        _view.setBackgroundColor(color);
+    }
 }

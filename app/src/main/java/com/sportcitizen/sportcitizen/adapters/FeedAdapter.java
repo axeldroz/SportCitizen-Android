@@ -1,5 +1,6 @@
 package com.sportcitizen.sportcitizen.adapters;
 import android.app.Activity;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 
@@ -32,6 +33,7 @@ public class FeedAdapter extends FirebaseRecyclerAdapter<Challenge, FeedViewHold
             holder.setLocation(model.location);
             holder.setDay(model.time);
             holder.setTime(model.time);
+            holder.setBackgroundColor(Color.parseColor("#efe7e0"));
             Log.d("creator_user", model.creator_user);
     }
 }
