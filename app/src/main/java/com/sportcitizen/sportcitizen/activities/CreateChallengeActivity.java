@@ -1,6 +1,5 @@
 package com.sportcitizen.sportcitizen.activities;
 
-import android.app.Activity;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
@@ -21,7 +19,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sportcitizen.sportcitizen.R;
 import com.sportcitizen.sportcitizen.adapters.EditFavoriteSportListAdapter;
-import com.sportcitizen.sportcitizen.viewholders.CreateChallengeViewHolder;
 
 import java.util.Calendar;
 
@@ -33,7 +30,6 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
     private DatabaseReference _databaseRef;
     private FirebaseUser _user;
     private DatabaseReference _dbRef;
-    private CreateChallengeViewHolder _viewHolder;
     private VerticalStepperFormLayout _verticalStepper;
     private EditText _nameEdit;
     private EditText _descriptionEdit;
