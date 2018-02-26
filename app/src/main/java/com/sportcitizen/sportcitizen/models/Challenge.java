@@ -12,6 +12,7 @@ import java.util.Map;
 
 public class Challenge{
     public String chall_id = "";
+    public String name = "";
     public String creator_user = "";
     public String description = "";
     public String location = "";
@@ -28,6 +29,8 @@ public class Challenge{
 
         if (chall_id != null && !chall_id.equals(""))
             result.put("chall_id", chall_id);
+        if (name != null && !name.equals(""))
+            result.put("name", name);
         if (creator_user != null && !creator_user.equals(""))
             result.put("creator_user", creator_user);
         if (description != null && !description.equals(""))
