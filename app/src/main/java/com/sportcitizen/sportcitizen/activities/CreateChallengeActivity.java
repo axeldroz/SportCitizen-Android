@@ -2,6 +2,7 @@ package com.sportcitizen.sportcitizen.activities;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.icu.lang.UScript;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
@@ -26,7 +27,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sportcitizen.sportcitizen.R;
 import com.sportcitizen.sportcitizen.adapters.EditFavoriteSportListAdapter;
+import com.sportcitizen.sportcitizen.dbutils.UserEventListener;
 import com.sportcitizen.sportcitizen.models.Challenge;
+import com.sportcitizen.sportcitizen.models.UserModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,6 +54,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
     private Button _cancelButton;
     private Calendar _calendar;
     private Challenge _model;
+    private UserModel _userInfo;
 
     private final long DAY_TIMESTAMP = 3600*24*1000;
     private final long MONTH_TIMESTAMP = DAY_TIMESTAMP * 30;
@@ -81,6 +85,8 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
         _model = new Challenge();
         _calendar = Calendar.getInstance();
         initDatabaseRef();
+        _userInfo = new UserModel();
+        _dbRef.addListenerForSingleValueEvent(new UserEventListener(_userInfo));
         initVerticalStepperForm();
     }
 
@@ -304,7 +310,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
             _verticalStepper.setActiveStepAsUncompleted("Please select an sport");
             return ("Please select an sport");
         }
-        _model.name = name;
+        _model.title = name;
         _model.sport = sport;
         _verticalStepper.setActiveStepAsCompleted();
         return ("");
@@ -393,8 +399,30 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
         return (_calendar);
     }
 
+    /**
+     * Finish to fillthe model
+     */
+    private void fillModel() {
+        DatabaseReference ref;
+
+        ref = _databaseRef.child("challenges");
+
+        Log.d("UserInfo", "name = " + _userInfo.name);
+
+        _model.location = "Bordeaux"; //subject to change for the real location
+        _model.creator_user = _user.getUid();
+        _model.photoURL = _userInfo.photoURL;
+        _model.chall_id = ref.push().getKey();
+    }
+
     @Override
     public void sendData() {
+        DatabaseReference ref;
+
         Log.d("LAST STEP", "Send Data !");
+        fillModel();
+        ref = _databaseRef.child("challenges").child(_model.chall_id);
+        _model.updateToDB(ref);
+        this.finish();
     }
 }

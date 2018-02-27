@@ -56,4 +56,18 @@ public class UserModel {
 
         ref.updateChildren(values);
     }
+
+    /**
+     * Copy value of an other model
+     */
+    public void copy(UserModel model) {
+        bio = model.bio;
+        email = model.bio;
+        favoriteSport = model.favoriteSport;
+        name = model.name;
+        photoURL = model.photoURL;
+        city = model.city;
+        age = model.age;
+        phone = model.phone;
+    }
 }
