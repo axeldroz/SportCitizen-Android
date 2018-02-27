@@ -1,13 +1,16 @@
 package com.sportcitizen.sportcitizen.activities;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +51,9 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
     private Button _cancelButton;
     private Calendar _calendar;
     private Challenge _model;
+
+    private final long DAY_TIMESTAMP = 3600*24*1000;
+    private final long MONTH_TIMESTAMP = DAY_TIMESTAMP * 30;
 
     /*
     private enum Step {
@@ -126,7 +132,6 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
             case 1:
                 view = createDescriptionView();
                 break;
-
             case 2:
                 view = createDateView();
                 break;
@@ -199,13 +204,21 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
     /**
      * Create Date View form
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public View createDateView () {
         LayoutInflater inflater;
         ConstraintLayout content;
+        final CreateChallengeActivity activity = this;
 
         inflater = LayoutInflater.from(getBaseContext());
         content = (ConstraintLayout) inflater.inflate(R.layout.form_challenge_date, null, false);
         _datePicker = content.findViewById(R.id.create_challenge_date_picker);
+        _datePicker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
+                activity.checkDate();
+            }
+        });
         if (_datePicker == null)
             Log.d("DATEPICKER", "null");
         return (content);
@@ -217,10 +230,17 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
     public View createTimeView() {
         LayoutInflater inflater;
         ConstraintLayout content;
+        final CreateChallengeActivity activity = this;
 
         inflater = LayoutInflater.from(getBaseContext());
         content = (ConstraintLayout) inflater.inflate(R.layout.form_challenge_time, null, false);
         _timePicker = content.findViewById(R.id.create_challenge_time_picker);
+        _timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker timePicker, int i, int i1) {
+                activity.checkTime();
+            }
+        });
         return (content);
     }
 
@@ -246,8 +266,10 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
             case 3:
                 error = checkTime();
                 break;
+            case 4:
+                Log.d("LAST STEP", "Confirm !");
+                break;
         }
-        Log.d("CHECKING", "Error = " + error);
     }
 
     /**
@@ -288,20 +310,6 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
         return ("");
     }
 
-    private void checkName() {
-        String name = "";
-
-        if (_nameEdit != null)
-            name = _nameEdit.getText().toString();
-        if(name.length() >= 3 && name.length() <= 40) {
-            _verticalStepper.setActiveStepAsCompleted();
-        } else {
-            // This error message is optional (use null if you don't want to display an error message)
-            String errorMessage = "The name must have between 3 and 40 characters";
-            _verticalStepper.setActiveStepAsUncompleted(errorMessage);
-        }
-    }
-
     /**
      * Check Description Form
      * And fill model if it's ok
@@ -334,19 +342,22 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
     private String checkDate() {
         Calendar calendar;
         Calendar today;
-        Calendar max;
 
         if (_datePicker == null)
             return ("Something wrong");
         today = Calendar.getInstance();
         calendar = getDate();
-        max = Calendar.getInstance();
-        max.set(Calendar.YEAR, 1);
-        if (today.getTimeInMillis() > _calendar.getTimeInMillis())
+
+        if (today.getTimeInMillis() > calendar.getTimeInMillis() + DAY_TIMESTAMP) {
+            _verticalStepper.setActiveStepAsUncompleted("You can't place an challenge in a past date : ");
             return ("You can't place an challenge in a past date");
-        if (today.getTimeInMillis() < calendar.getTimeInMillis() - max.getTimeInMillis())
+        }
+        if (today.getTimeInMillis() < calendar.getTimeInMillis() - MONTH_TIMESTAMP) {
+            _verticalStepper.setActiveStepAsUncompleted("Stop to live in the future !");
             return ("Stop to live in the future !");
+        }
         _verticalStepper.setActiveStepAsCompleted();
+        _model.time = calendar.getTimeInMillis() + "";
         return ("");
     }
 
@@ -357,12 +368,12 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
     private String checkTime() {
         int hour, minute;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            hour = _timePicker.getHour();
-            minute = _timePicker.getMinute();
-            _calendar.set(Calendar.HOUR, hour);
-            _calendar.set(Calendar.MINUTE, minute);
-        }
+        hour = _timePicker.getHour();
+        minute = _timePicker.getMinute();
+        _calendar.set(Calendar.HOUR, hour);
+        _calendar.set(Calendar.MINUTE, minute);
+        _verticalStepper.setActiveStepAsCompleted();
+        _model.time = _calendar.getTimeInMillis() + "";
         return ("");
     }
 
@@ -384,6 +395,6 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
 
     @Override
     public void sendData() {
-
+        Log.d("LAST STEP", "Send Data !");
     }
 }
