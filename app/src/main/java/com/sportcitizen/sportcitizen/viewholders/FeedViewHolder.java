@@ -41,10 +41,10 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
         String shortDescription;
 
         text = _view.findViewById(R.id.cell_text_description);
-        if (description.length() < 60)
+        if (description.length() < 50)
             shortDescription = description;
         else {
-            shortDescription = description.substring(0, 60);
+            shortDescription = description.substring(0, 50);
             shortDescription += " ...";
         }
         text.setText(shortDescription);

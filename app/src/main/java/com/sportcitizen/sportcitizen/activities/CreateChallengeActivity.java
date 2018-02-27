@@ -1,11 +1,18 @@
 package com.sportcitizen.sportcitizen.activities;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.icu.lang.UScript;
+import android.location.LocationManager;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,7 +36,9 @@ import com.sportcitizen.sportcitizen.R;
 import com.sportcitizen.sportcitizen.adapters.EditFavoriteSportListAdapter;
 import com.sportcitizen.sportcitizen.dbutils.UserEventListener;
 import com.sportcitizen.sportcitizen.models.Challenge;
+import com.sportcitizen.sportcitizen.models.LocationModel;
 import com.sportcitizen.sportcitizen.models.UserModel;
+import com.sportcitizen.sportcitizen.utils.MyLocationListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,7 +48,7 @@ import java.util.List;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
 
-public class CreateChallengeActivity extends AppCompatActivity implements VerticalStepperForm{
+public class CreateChallengeActivity extends AppCompatActivity implements VerticalStepperForm {
     private FirebaseDatabase mDatabase;
     private DatabaseReference _databaseRef;
     private FirebaseUser _user;
@@ -55,8 +64,11 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
     private Calendar _calendar;
     private Challenge _model;
     private UserModel _userInfo;
+    private LocationModel _locationModel;
+    private LocationManager _locationManager;
+    MyLocationListener _locationListener;
 
-    private final long DAY_TIMESTAMP = 3600*24*1000;
+    private final long DAY_TIMESTAMP = 3600 * 24 * 1000;
     private final long MONTH_TIMESTAMP = DAY_TIMESTAMP * 30;
 
     /*
@@ -83,11 +95,17 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
         setContentView(R.layout.activity_create_challenge_2);
 
         _model = new Challenge();
+        _locationModel = new LocationModel();
+        _locationListener = new MyLocationListener(_locationModel, this);
+        _locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+
         _calendar = Calendar.getInstance();
         initDatabaseRef();
         _userInfo = new UserModel();
         _dbRef.addListenerForSingleValueEvent(new UserEventListener(_userInfo));
         initVerticalStepperForm();
+        getLocation();
     }
 
     /**
@@ -97,7 +115,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
         _user = FirebaseAuth.getInstance().getCurrentUser();
         try {
             mDatabase = FirebaseDatabase.getInstance();
-        }catch (Exception e) {
+        } catch (Exception e) {
             Log.d("Exception", e.getMessage());
         }
         _databaseRef = mDatabase.getReference();
@@ -108,7 +126,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
      * Init and instance of the vertical stepper form
      */
     private void initVerticalStepperForm() {
-        String [] steps = {"Name and sport", "Description", "Date", "Time"};
+        String[] steps = {"Name and sport", "Description", "Date", "Time"};
         int color1, color2;
 
         _verticalStepper = findViewById(R.id.vertical_stepper_form);
@@ -169,13 +187,17 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
         _nameEdit = content.findViewById(R.id.create_challenge_name_edit);
         _nameEdit.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 activity.checkNameAndSport();
             }
+
             @Override
-            public void afterTextChanged(Editable editable) {}
+            public void afterTextChanged(Editable editable) {
+            }
         });
         ref = _databaseRef.child("sports");
         adapter = new EditFavoriteSportListAdapter(this, String.class, R.layout.support_simple_spinner_dropdown_item, ref);
@@ -186,7 +208,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
     /**
      * Create Description View form
      */
-    public View createDescriptionView () {
+    public View createDescriptionView() {
         LayoutInflater inflater;
         ConstraintLayout content;
         final CreateChallengeActivity activity = this;
@@ -196,7 +218,8 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
         _descriptionEdit = content.findViewById(R.id.create_challenge_description_edit);
         _descriptionEdit.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -204,7 +227,8 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {}
+            public void afterTextChanged(Editable editable) {
+            }
         });
         return (content);
     }
@@ -213,7 +237,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
      * Create Date View form
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public View createDateView () {
+    public View createDateView() {
         LayoutInflater inflater;
         ConstraintLayout content;
         final CreateChallengeActivity activity = this;
@@ -295,7 +319,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
         name = _nameEdit.getText().toString();
         Log.d("NAME", name + " ");
         if (_sportSpinner != null)
-            sport = (String)_sportSpinner.getSelectedItem();
+            sport = (String) _sportSpinner.getSelectedItem();
         else {
             _verticalStepper.setActiveStepAsUncompleted("Something wrong");
             return ("Something wrong");
@@ -325,7 +349,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
     private String checkDescription() {
         String description;
 
-        if(_descriptionEdit == null) {
+        if (_descriptionEdit == null) {
             _verticalStepper.setActiveStepAsUncompleted("Something is wrong");
             return ("Something is wrong");
         }
@@ -417,18 +441,57 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
         _model.creator_user = _user.getUid();
         _model.photoURL = _userInfo.photoURL;
         _model.chall_id = ref.push().getKey();
+        if (_model.location.equals("")) {
+            getLocation();
+        }
+
         String t = DateFormat.format(" MMM EEEE d h:mm a", Long.parseLong(_model.time)).toString();
         Log.d("Final TIME ", t);
+    }
+
+    public void getLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            Log.d("GPS", "Active the gps please");
+            return;
+        }
+        _locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, _locationListener);
+        _model.location = _locationModel.city;
     }
 
     @Override
     public void sendData() {
         DatabaseReference ref;
 
-        Log.d("LAST STEP", "Send Data !");
-        fillModel();
-        ref = _databaseRef.child("challenges").child(_model.chall_id);
-        _model.updateToDB(ref);
-        this.finish();
+        if (displayGpsStatus()) {
+            Log.d("LAST STEP", "Send Data !");
+            fillModel();
+            ref = _databaseRef.child("challenges").child(_model.chall_id);
+            _model.updateToDB(ref);
+            this.finish();
+        }
+        else
+            Log.d("GPS", "Active the gps please");
+    }
+
+    /*----Method to Check GPS is enable or disable ----- */
+    private Boolean displayGpsStatus() {
+        ContentResolver contentResolver = getBaseContext()
+                .getContentResolver();
+        boolean gpsStatus = Settings.Secure
+                .isLocationProviderEnabled(contentResolver,
+                        LocationManager.GPS_PROVIDER);
+        if (gpsStatus) {
+            return true;
+
+        } else {
+            return false;
+        }
     }
 }
