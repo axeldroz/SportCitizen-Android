@@ -127,6 +127,8 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
      * @param stepNumber
      * @return View created
      */
+    @TargetApi(Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View createStepContentView(int stepNumber) {
         View view = null;
@@ -363,7 +365,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
             return ("Stop to live in the future !");
         }
         _verticalStepper.setActiveStepAsCompleted();
-        _model.time = calendar.getTimeInMillis() + "";
+        _model.time = (_calendar.getTimeInMillis() / 1000) + "";
         return ("");
     }
 
@@ -379,7 +381,9 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
         _calendar.set(Calendar.HOUR, hour);
         _calendar.set(Calendar.MINUTE, minute);
         _verticalStepper.setActiveStepAsCompleted();
-        _model.time = _calendar.getTimeInMillis() + "";
+        String t = DateFormat.format(" MMM EEEE d h:mm a", _calendar).toString();
+        Log.d("TIME ", t);
+        _model.time = (_calendar.getTimeInMillis() / 1000) + "";
         return ("");
     }
 
@@ -413,6 +417,8 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
         _model.creator_user = _user.getUid();
         _model.photoURL = _userInfo.photoURL;
         _model.chall_id = ref.push().getKey();
+        String t = DateFormat.format(" MMM EEEE d h:mm a", Long.parseLong(_model.time)).toString();
+        Log.d("Final TIME ", t);
     }
 
     @Override
