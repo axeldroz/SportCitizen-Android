@@ -38,9 +38,16 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
 
     public void setDescription(String description) {
         TextView text;
+        String shortDescription;
 
         text = _view.findViewById(R.id.cell_text_description);
-        text.setText(description);
+        if (description.length() < 60)
+            shortDescription = description;
+        else {
+            shortDescription = description.substring(0, 60);
+            shortDescription += " ...";
+        }
+        text.setText(shortDescription);
     }
 
     public void setImage(String url) {
