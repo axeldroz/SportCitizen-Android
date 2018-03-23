@@ -74,6 +74,13 @@ public class ChallengeViewHolder {
         text.setText(value);
     }
 
+    public void setDescription(String value) {
+        TextView text;
+
+        text = _mainView.findViewById(R.id.challenge_view_description);
+        text.setText(value);
+    }
+
     public void setDay(String timestamp) {
         TextView text;
         float nb;

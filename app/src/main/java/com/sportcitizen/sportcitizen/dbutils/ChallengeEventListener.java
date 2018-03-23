@@ -29,6 +29,7 @@ public class ChallengeEventListener implements ValueEventListener {
         _holder.setLocation(model.location);
         _holder.setDay(model.time);
         _holder.setTime(model.time);
+        _holder.setDescription(model.description);
     }
 
     @Override

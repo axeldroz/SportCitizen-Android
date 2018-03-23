@@ -79,7 +79,7 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
         text = _view.findViewById(R.id.cell_feed_text_location);
         text.setText(value);
     }
-
+    
     private String getDate(long time) {
         Calendar cal = Calendar.getInstance(Locale.FRANCE);
         cal.setTimeInMillis(time);
