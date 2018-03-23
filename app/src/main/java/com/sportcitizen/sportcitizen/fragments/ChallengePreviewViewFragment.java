@@ -87,6 +87,10 @@ public class ChallengePreviewViewFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_challenge_view, container, false);
         _holder = new ChallengePreviewViewHolder(view, _dbRef, this.getActivity());
+        if (mParam1.equals("ok")) {
+            _holder.hideButtonJoin();
+            _holder.showPhoneNumber();
+        }
         setChallengeInfoListener(_holder);
         return (view);
     }

@@ -19,6 +19,7 @@ public class ChallengeModel {
     public String sport = "";
     public String time = "";
     public String title = "";
+    public String phone = "";
 
     public ChallengeModel() {}
 
@@ -42,6 +43,8 @@ public class ChallengeModel {
             result.put("time", time);
         if (title != null && !title.equals(""))
             result.put("title", title);
+        if (phone != null && !phone.equals(""))
+            result.put("phone", phone);
         return (result);
     }
 

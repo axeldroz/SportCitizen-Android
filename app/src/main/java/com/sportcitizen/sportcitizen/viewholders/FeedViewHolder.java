@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -116,6 +117,17 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
                 MenuItem item = ((MainActivity)context).getMenu().getItem(0);
                 ((MainActivity)context).addItemInStack(item);
                 ((MainActivity)context).runChallengeView(model.title, model.chall_id);
+            }
+        });
+    }
+
+    public void setOnclick(final Activity context, final ChallengeModel model, final String right) {
+        getView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MenuItem item = ((MainActivity)context).getMenu().getItem(0);
+                ((MainActivity)context).addItemInStack(item);
+                ((MainActivity)context).runChallengeView(right, model.chall_id);
             }
         });
     }

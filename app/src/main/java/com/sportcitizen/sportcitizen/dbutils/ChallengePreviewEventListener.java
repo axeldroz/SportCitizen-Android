@@ -30,6 +30,7 @@ public class ChallengePreviewEventListener implements ValueEventListener {
         _holder.setDay(model.time);
         _holder.setTime(model.time);
         _holder.setDescription(model.description);
+        _holder.setPhone(model.phone);
     }
 
     @Override

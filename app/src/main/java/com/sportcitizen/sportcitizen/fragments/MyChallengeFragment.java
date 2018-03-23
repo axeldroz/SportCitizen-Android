@@ -4,12 +4,21 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.sportcitizen.sportcitizen.R;
+import com.sportcitizen.sportcitizen.adapters.MyChallengesAdapter;
+import com.sportcitizen.sportcitizen.viewholders.ProfileViewHolder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +39,13 @@ public class MyChallengeFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mDatabaseRef;
+    private FirebaseUser _user;
+    private DatabaseReference _dbRef;
+
+    public ProfileViewHolder _holder;
 
     public MyChallengeFragment() {
         // Required empty public constructor
@@ -60,12 +76,23 @@ public class MyChallengeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        initDatabaseRef();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_mychallenges, container, false);
+        View view;
+        RecyclerView recyclerView;
+        DatabaseReference ref;
+
+        ref = _dbRef;
+        view = inflater.inflate(R.layout.fragment_mychallenges, container, false);
+        recyclerView = view.findViewById(R.id.mychallenges_recycler_view);
+        initTitleBar();
+        recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 1));
+        recyclerView.setAdapter(new MyChallengesAdapter(ref, this.getActivity()));
+        return (view);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -111,5 +138,23 @@ public class MyChallengeFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    /**
+     * Initalise firebase
+     */
+    private void initDatabaseRef() {
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+        _user = FirebaseAuth.getInstance().getCurrentUser();
+        try {
+            mDatabase = FirebaseDatabase.getInstance();
+        }catch (Exception e) {
+            Log.d("Exception", e.getMessage());
+        }
+        mDatabaseRef = mDatabase.getReference();
+        _dbRef = mDatabase.getReference("users").child(_user.getUid()).child("my_challenges");
     }
 }
