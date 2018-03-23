@@ -1,15 +1,19 @@
 package com.sportcitizen.sportcitizen.viewholders;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.sportcitizen.sportcitizen.R;
+import com.sportcitizen.sportcitizen.activities.MainActivity;
+import com.sportcitizen.sportcitizen.models.Challenge;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -106,6 +110,17 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
         nb = Float.parseFloat(timestamp) * 1000;
         text = _view.findViewById(R.id.cell_feed_text_time);
         text.setText(getTime((long)nb));
+    }
+
+    public void setOnclick(final Activity context, final Challenge model) {
+        getView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MenuItem item = ((MainActivity)context).getMenu().getItem(0);
+                ((MainActivity)context).addItemInStack(item);
+                ((MainActivity)context).runChallengeView(model.title, model.chall_id);
+            }
+        });
     }
 
     public void setBackgroundColor(int color) {

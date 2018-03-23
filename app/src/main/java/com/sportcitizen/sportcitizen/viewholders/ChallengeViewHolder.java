@@ -1,10 +1,13 @@
 package com.sportcitizen.sportcitizen.viewholders;
 
+/**
+ * Created by axeldroz on 23/03/2018.
+ */
+
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
@@ -12,21 +15,15 @@ import com.sportcitizen.sportcitizen.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
-import org.w3c.dom.Text;
-
 /**
- * Created by Axel Drozdzynski on 21/02/2018.
+ * View holder to describe a challenge
  */
-
-/**
- * View holder to describe and fill profile information in Profile View
- */
-public class ProfileViewHolder {
+public class ChallengeViewHolder {
     private View _mainView;
     private DatabaseReference _ref;
     private Activity _activity;
 
-    public ProfileViewHolder(View view, DatabaseReference ref, Activity activity) {
+    public ChallengeViewHolder(View view, DatabaseReference ref, Activity activity) {
         _mainView = view;
         _ref = ref;
         _activity = activity;
@@ -36,7 +33,7 @@ public class ProfileViewHolder {
         ImageView image;
         Transformation transformation;
 
-        image = _mainView.findViewById(R.id.profile_view_image);
+        image = _mainView.findViewById(R.id.challenge_view_image);
         transformation = new RoundedTransformationBuilder()
                 .borderColor(Color.WHITE)
                 .borderWidthDp(1)
@@ -49,35 +46,5 @@ public class ProfileViewHolder {
                 .fit()
                 .transform(transformation)
                 .into(image);
-    }
-
-    public void setName(String name) {
-        TextView text;
-
-        text = _mainView.findViewById(R.id.profile_view_name);
-        text.setText(name);
-    }
-
-    public void setCityAndAge(String city, long age) {
-        TextView text;
-        String str;
-
-        text = _mainView.findViewById(R.id.profile_view_city_age);
-        str = city + "   |   " + age + " years old";
-        text.setText(str);
-    }
-
-    public void setFavoriteSport(String sport) {
-        TextView text;
-
-        text = _mainView.findViewById(R.id.profile_view_favorite_sport);
-        text.setText(sport);
-    }
-
-    public void setBio(String bio) {
-        TextView text;
-
-        text = _mainView.findViewById(R.id.profile_view_bio);
-        text.setText(bio);
     }
 }

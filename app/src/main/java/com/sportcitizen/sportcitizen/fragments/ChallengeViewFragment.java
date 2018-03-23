@@ -4,11 +4,21 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.sportcitizen.sportcitizen.R;
+import com.sportcitizen.sportcitizen.dbutils.ChallengeEventListener;
+import com.sportcitizen.sportcitizen.dbutils.ProfileEventListener;
+import com.sportcitizen.sportcitizen.viewholders.ChallengeViewHolder;
+import com.sportcitizen.sportcitizen.viewholders.ProfileViewHolder;
 
 
 /**
@@ -30,6 +40,14 @@ public class ChallengeViewFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private TextView _text;
+    private ChallengeViewHolder _holder;
+
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mDatabaseRef;
+    private FirebaseUser _user;
+    private DatabaseReference _dbRef;
 
     public ChallengeViewFragment() {
         // Required empty public constructor
@@ -56,17 +74,25 @@ public class ChallengeViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        initDatabaseRef();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_challenge_view, container, false);
+        View view;
+
+        view = inflater.inflate(R.layout.fragment_challenge_view, container, false);
+        _holder = new ChallengeViewHolder(view, _dbRef, this.getActivity());
+        setChallengeInfoListener(_holder);
+        _text = view.findViewById(R.id.challenge_view_titleView);
+        _text.setText(mParam1);
+        return (view);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -100,5 +126,30 @@ public class ChallengeViewFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    /**
+     * Initalise firebase
+     */
+    private void initDatabaseRef() {
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+        _user = FirebaseAuth.getInstance().getCurrentUser();
+        try {
+            mDatabase = FirebaseDatabase.getInstance();
+        }catch (Exception e) {
+            Log.d("Exception", e.getMessage());
+        }
+        mDatabaseRef = mDatabase.getReference();
+        _dbRef = mDatabase.getReference("challenges").child(mParam2);
+    }
+
+    /**
+     * Set listener which manage profile info
+     */
+    private void setChallengeInfoListener(final ChallengeViewHolder holder) {
+        _dbRef.addValueEventListener(new ChallengeEventListener(holder));
     }
 }

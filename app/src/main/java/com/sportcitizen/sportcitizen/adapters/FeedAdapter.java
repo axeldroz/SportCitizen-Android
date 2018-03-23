@@ -38,14 +38,15 @@ public class FeedAdapter extends FirebaseRecyclerAdapter<Challenge, FeedViewHold
             holder.setDay(model.time);
             holder.setTime(model.time);
             holder.setBackgroundColor(Color.parseColor("#efe7e0"));
-            holder.getView().setOnClickListener(new View.OnClickListener() {
+            holder.setOnclick(_context, model);
+            /*holder.getView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     MenuItem item = ((MainActivity)_context).getMenu().getItem(0);
                     ((MainActivity)_context).addItemInStack(item);
                     ((MainActivity)_context).back(4);
                 }
-            });
+            });*/
             Log.d("creator_user", model.creator_user);
     }
 }

@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -16,6 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sportcitizen.sportcitizen.R;
 import com.sportcitizen.sportcitizen.models.UserModel;
+
+import org.json.JSONArray;
 
 import java.util.Arrays;
 import java.util.List;
@@ -95,10 +100,13 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user;
         UserModel model;
         DatabaseReference ref;
+        AccessToken facebookToken = null;
+        GraphRequest request;
 
         model = new UserModel();
         user = FirebaseAuth.getInstance().getCurrentUser();
-        ref = mDatabase.getReference("users").child(user.getUid());
+        //facebookToken =
+                ref = mDatabase.getReference("users").child(user.getUid());
         model.email = user.getEmail();
         if (!user.getProviderData().isEmpty() && user.getProviderData().size() > 1)
             model.photoURL = "https://graph.facebook.com/" + user.getProviderData().get(1).getUid() + "/picture?type=large";
@@ -112,6 +120,19 @@ public class LoginActivity extends AppCompatActivity {
         ref.child("age").setValue(model.age); // we'll need to get from facebook
         ref.child("city").setValue(model.city); // we'll need to get from location
     }
+
+    public void askFacebookBH(AccessToken token, String userId, UserModel model) {
+        GraphRequest request;
+
+        request = GraphRequest.newGraphPathRequest(token, "/me?fields=id", new GraphRequest.Callback() {
+            @Override
+            public void onCompleted(GraphResponse response) {
+                String str = response.toString();
+                Log.d("FacebookRequest", str);
+            }
+        });
+    }
+
 
     private class CustomUserModel {
         public String email = "";

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import com.sportcitizen.sportcitizen.R;
 import com.sportcitizen.sportcitizen.activities.CreateChallengeActivity;
 import com.sportcitizen.sportcitizen.activities.EditProfileActivity;
+import com.sportcitizen.sportcitizen.viewholders.ChallengeViewHolder;
 
 /**
  * A simple {@link Fragment} subclass.

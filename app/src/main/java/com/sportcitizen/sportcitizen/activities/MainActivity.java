@@ -159,6 +159,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return (loadFragment(fragment));
     }
 
+    public void runChallengeView(String challTitle, String challId) {
+        Fragment fragment;
+
+        fragment = ChallengeViewFragment.newInstance(challTitle, challId);
+        //menuItem = menu.getItem(4)
+        loadFragment(fragment);
+    }
+
 
     @Override
     public void onBackPressed() {
