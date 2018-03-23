@@ -90,8 +90,6 @@ public class ChallengeViewFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_challenge_view, container, false);
         _holder = new ChallengeViewHolder(view, _dbRef, this.getActivity());
         setChallengeInfoListener(_holder);
-        _text = view.findViewById(R.id.challenge_view_titleView);
-        _text.setText(mParam1);
         return (view);
     }
 

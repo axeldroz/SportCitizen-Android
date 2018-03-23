@@ -7,7 +7,7 @@ import com.sportcitizen.sportcitizen.models.Challenge;
 import com.sportcitizen.sportcitizen.viewholders.ChallengeViewHolder;
 
 /**
- * Created by axeldroz on 23/03/2018.
+ * Created by Axel Drozdzynski on 23/03/2018.
  */
 
 public class ChallengeEventListener implements ValueEventListener {
@@ -24,6 +24,11 @@ public class ChallengeEventListener implements ValueEventListener {
         Challenge model = dataSnapshot.getValue(Challenge.class);
 
         _holder.setImage(model.photoURL);
+        _holder.setTitle(model.title);
+        _holder.setSport(model.sport);
+        _holder.setLocation(model.location);
+        _holder.setDay(model.time);
+        _holder.setTime(model.time);
     }
 
     @Override
