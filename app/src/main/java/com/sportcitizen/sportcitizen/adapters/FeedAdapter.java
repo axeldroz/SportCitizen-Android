@@ -3,34 +3,30 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.sportcitizen.sportcitizen.R;
-import com.sportcitizen.sportcitizen.activities.MainActivity;
-import com.sportcitizen.sportcitizen.fragments.ChallengeViewFragment;
-import com.sportcitizen.sportcitizen.models.Challenge;
+import com.sportcitizen.sportcitizen.models.ChallengeModel;
 import com.sportcitizen.sportcitizen.viewholders.FeedViewHolder;
 
 /**
  * Created by Axel Drozdzynski on 20/02/2018.
  */
 
-public class FeedAdapter extends FirebaseRecyclerAdapter<Challenge, FeedViewHolder> {
+public class FeedAdapter extends FirebaseRecyclerAdapter<ChallengeModel, FeedViewHolder> {
 
     private int _count;
     private LayoutInflater _layoutinflater;
     private Activity _context;
 
     public FeedAdapter(DatabaseReference ref, Activity context) {
-        super(Challenge.class, R.layout.cell_feed_cards, FeedViewHolder.class, ref);
+        super(ChallengeModel.class, R.layout.cell_feed_cards, FeedViewHolder.class, ref);
         _context = context;
     }
 
     @Override
-    protected void populateViewHolder(FeedViewHolder holder, Challenge model, int position) {
+    protected void populateViewHolder(FeedViewHolder holder, ChallengeModel model, int position) {
             holder.setTitle(model.title);
             holder.setDescription(model.description);
             holder.setImage(model.photoURL);

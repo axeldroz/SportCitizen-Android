@@ -3,25 +3,25 @@ package com.sportcitizen.sportcitizen.dbutils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.sportcitizen.sportcitizen.models.Challenge;
-import com.sportcitizen.sportcitizen.viewholders.ChallengeViewHolder;
+import com.sportcitizen.sportcitizen.models.ChallengeModel;
+import com.sportcitizen.sportcitizen.viewholders.ChallengePreviewViewHolder;
 
 /**
  * Created by Axel Drozdzynski on 23/03/2018.
  */
 
-public class ChallengeEventListener implements ValueEventListener {
-    private ChallengeViewHolder _holder;
+public class ChallengePreviewEventListener implements ValueEventListener {
+    private ChallengePreviewViewHolder _holder;
 
-    public ChallengeEventListener(ChallengeViewHolder holder) {
+    public ChallengePreviewEventListener(ChallengePreviewViewHolder holder) {
         super();
         _holder = holder;
     }
 
-    /* get Challenge Model and modify view display througth a ChallengeViewHolder */
+    /* get ChallengeModel Model and modify view display througth a ChallengePreviewViewHolder */
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-        Challenge model = dataSnapshot.getValue(Challenge.class);
+        ChallengeModel model = dataSnapshot.getValue(ChallengeModel.class);
 
         _holder.setImage(model.photoURL);
         _holder.setTitle(model.title);

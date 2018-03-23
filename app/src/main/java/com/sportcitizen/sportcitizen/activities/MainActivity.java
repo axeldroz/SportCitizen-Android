@@ -10,9 +10,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-        import com.sportcitizen.sportcitizen.fragments.ChallengeViewFragment;
+import com.sportcitizen.sportcitizen.fragments.ChallengePreviewViewFragment;
 import com.sportcitizen.sportcitizen.R;
-import com.sportcitizen.sportcitizen.fragments.ChallengeFragment;
+import com.sportcitizen.sportcitizen.fragments.MyChallengeFragment;
 import com.sportcitizen.sportcitizen.fragments.FeedFragment;
 import com.sportcitizen.sportcitizen.fragments.NotificationsFragment;
 import com.sportcitizen.sportcitizen.fragments.ProfileFragment;
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.navigation_challenges:
                 menuItem = menu.getItem(1);
                 addItemInStack(menuItem);
-                fragment = new ChallengeFragment();
+                fragment = new MyChallengeFragment();
                 break;
 
             case R.id.navigation_notifications:
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.navigation_challenges:
                 menuItem = menu.getItem(1);
-                fragment = new ChallengeFragment();
+                fragment = new MyChallengeFragment();
                 break;
 
             case R.id.navigation_notifications:
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case 1:
-                fragment = new ChallengeFragment();
+                fragment = new MyChallengeFragment();
                 break;
 
             case 2:
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case 4:
-                fragment = new ChallengeViewFragment();
+                fragment = new ChallengePreviewViewFragment();
                 break;
 
             default:
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void runChallengeView(String challTitle, String challId) {
         Fragment fragment;
 
-        fragment = ChallengeViewFragment.newInstance(challTitle, challId);
+        fragment = ChallengePreviewViewFragment.newInstance(challTitle, challId);
         //menuItem = menu.getItem(4)
         loadFragment(fragment);
     }

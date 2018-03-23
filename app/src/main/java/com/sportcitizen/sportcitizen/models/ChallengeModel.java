@@ -10,7 +10,7 @@ import java.util.Map;
  * Created by Axel Drozdzynski on 20/02/2018.
  */
 
-public class Challenge{
+public class ChallengeModel {
     public String chall_id = "";
     public String creator_user = "";
     public String description = "";
@@ -20,7 +20,7 @@ public class Challenge{
     public String time = "";
     public String title = "";
 
-    public Challenge() {}
+    public ChallengeModel() {}
 
     @Exclude
     public Map<String, Object> toMap() {

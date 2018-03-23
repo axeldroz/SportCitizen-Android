@@ -2,11 +2,9 @@ package com.sportcitizen.sportcitizen.activities;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.icu.lang.UScript;
 import android.location.LocationManager;
 import android.os.Build;
 import android.provider.Settings;
@@ -35,15 +33,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.sportcitizen.sportcitizen.R;
 import com.sportcitizen.sportcitizen.adapters.EditFavoriteSportListAdapter;
 import com.sportcitizen.sportcitizen.dbutils.UserEventListener;
-import com.sportcitizen.sportcitizen.models.Challenge;
+import com.sportcitizen.sportcitizen.models.ChallengeModel;
 import com.sportcitizen.sportcitizen.models.LocationModel;
 import com.sportcitizen.sportcitizen.models.UserModel;
 import com.sportcitizen.sportcitizen.utils.MyLocationListener;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
@@ -62,7 +57,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
     private Button _createButton;
     private Button _cancelButton;
     private Calendar _calendar;
-    private Challenge _model;
+    private ChallengeModel _model;
     private UserModel _userInfo;
     private LocationModel _locationModel;
     private LocationManager _locationManager;
@@ -94,7 +89,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_challenge_2);
 
-        _model = new Challenge();
+        _model = new ChallengeModel();
         _locationModel = new LocationModel();
         _locationListener = new MyLocationListener(_locationModel, this);
         _locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.sportcitizen.sportcitizen.R;
 import com.sportcitizen.sportcitizen.activities.MainActivity;
-import com.sportcitizen.sportcitizen.models.Challenge;
+import com.sportcitizen.sportcitizen.models.ChallengeModel;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -109,7 +109,7 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
         text.setText(getTime((long)nb));
     }
 
-    public void setOnclick(final Activity context, final Challenge model) {
+    public void setOnclick(final Activity context, final ChallengeModel model) {
         getView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

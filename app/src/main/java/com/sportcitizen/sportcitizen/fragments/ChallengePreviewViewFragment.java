@@ -1,30 +1,33 @@
 package com.sportcitizen.sportcitizen.fragments;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.sportcitizen.sportcitizen.R;
-import com.sportcitizen.sportcitizen.activities.CreateChallengeActivity;
-import com.sportcitizen.sportcitizen.activities.EditProfileActivity;
-import com.sportcitizen.sportcitizen.viewholders.ChallengeViewHolder;
+import com.sportcitizen.sportcitizen.dbutils.ChallengePreviewEventListener;
+import com.sportcitizen.sportcitizen.viewholders.ChallengePreviewViewHolder;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ChallengeFragment.OnFragmentInteractionListener} interface
+ * {@link ChallengePreviewViewFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ChallengeFragment#newInstance} factory method to
+ * Use the {@link ChallengePreviewViewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChallengeFragment extends Fragment {
+public class ChallengePreviewViewFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,7 +39,15 @@ public class ChallengeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ChallengeFragment() {
+    private TextView _text;
+    private ChallengePreviewViewHolder _holder;
+
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mDatabaseRef;
+    private FirebaseUser _user;
+    private DatabaseReference _dbRef;
+
+    public ChallengePreviewViewFragment() {
         // Required empty public constructor
     }
 
@@ -46,11 +57,11 @@ public class ChallengeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ChallengeFragment.
+     * @return A new instance of fragment ChallengePreviewViewFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChallengeFragment newInstance(String param1, String param2) {
-        ChallengeFragment fragment = new ChallengeFragment();
+    public static ChallengePreviewViewFragment newInstance(String param1, String param2) {
+        ChallengePreviewViewFragment fragment = new ChallengePreviewViewFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,16 +72,23 @@ public class ChallengeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        initDatabaseRef();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_challenge, container, false);
+        View view;
+
+        view = inflater.inflate(R.layout.fragment_challenge_view, container, false);
+        _holder = new ChallengePreviewViewHolder(view, _dbRef, this.getActivity());
+        setChallengeInfoListener(_holder);
+        return (view);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -91,18 +109,6 @@ public class ChallengeFragment extends Fragment {
         mListener = null;
     }
 
-    public void initTitleBar() {
-        ImageView option = this.getActivity().findViewById(R.id.titlebar_button_right);
-
-        option.setVisibility(View.GONE);
-        option.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-    }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -116,5 +122,30 @@ public class ChallengeFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    /**
+     * Initalise firebase
+     */
+    private void initDatabaseRef() {
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+        _user = FirebaseAuth.getInstance().getCurrentUser();
+        try {
+            mDatabase = FirebaseDatabase.getInstance();
+        }catch (Exception e) {
+            Log.d("Exception", e.getMessage());
+        }
+        mDatabaseRef = mDatabase.getReference();
+        _dbRef = mDatabase.getReference("challenges").child(mParam2);
+    }
+
+    /**
+     * Set listener which manage profile info
+     */
+    private void setChallengeInfoListener(final ChallengePreviewViewHolder holder) {
+        _dbRef.addValueEventListener(new ChallengePreviewEventListener(holder));
     }
 }

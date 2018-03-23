@@ -1,11 +1,7 @@
 package com.sportcitizen.sportcitizen.adapters;
 import android.app.Activity;
-import android.graphics.Color;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,13 +9,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sportcitizen.sportcitizen.R;
-import com.sportcitizen.sportcitizen.activities.MainActivity;
-import com.sportcitizen.sportcitizen.dbutils.ProfileEventListener;
 import com.sportcitizen.sportcitizen.dbutils.ProfileEventListenerForNotif;
-import com.sportcitizen.sportcitizen.fragments.ChallengeViewFragment;
-import com.sportcitizen.sportcitizen.models.Challenge;
 import com.sportcitizen.sportcitizen.models.NotificationModel;
-import com.sportcitizen.sportcitizen.viewholders.FeedViewHolder;
 import com.sportcitizen.sportcitizen.viewholders.NotificationsViewHolder;
 
 /**

@@ -23,12 +23,12 @@ import java.util.Locale;
 /**
  * View holder to describe a challenge
  */
-public class ChallengeViewHolder {
+public class ChallengePreviewViewHolder {
     private View _mainView;
     private DatabaseReference _ref;
     private Activity _activity;
 
-    public ChallengeViewHolder(View view, DatabaseReference ref, Activity activity) {
+    public ChallengePreviewViewHolder(View view, DatabaseReference ref, Activity activity) {
         _mainView = view;
         _ref = ref;
         _activity = activity;
