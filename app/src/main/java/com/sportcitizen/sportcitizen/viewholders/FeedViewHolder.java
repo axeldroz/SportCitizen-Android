@@ -1,7 +1,6 @@
 package com.sportcitizen.sportcitizen.viewholders;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
@@ -17,9 +16,7 @@ import com.sportcitizen.sportcitizen.models.Challenge;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -58,7 +55,7 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         Transformation transformation;
 
-        image = _view.findViewById(R.id.cell_image_feed);
+        image = _view.findViewById(R.id.cell_image);
         transformation = new RoundedTransformationBuilder()
                 .borderColor(Color.WHITE)
                 .borderWidthDp(1)
@@ -79,7 +76,7 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
         text = _view.findViewById(R.id.cell_feed_text_location);
         text.setText(value);
     }
-    
+
     private String getDate(long time) {
         Calendar cal = Calendar.getInstance(Locale.FRANCE);
         cal.setTimeInMillis(time);

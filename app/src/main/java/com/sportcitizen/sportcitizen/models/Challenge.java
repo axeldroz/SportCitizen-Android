@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by axeldroz on 20/02/2018.
+ * Created by Axel Drozdzynski on 20/02/2018.
  */
 
 public class Challenge{
