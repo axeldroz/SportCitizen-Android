@@ -3,8 +3,7 @@
     package="com.sportcitizen.sportcitizen">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION">
-    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -29,7 +28,8 @@
         <activity
             android:name=".activities.EditProfileActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.CreateChallengeActivity"></activity>
+        <activity android:name=".activities.CreateChallengeActivity" />
+        <activity android:name=".NotificationReplyActivity"></activity>
     </application>
 
 </manifest>
