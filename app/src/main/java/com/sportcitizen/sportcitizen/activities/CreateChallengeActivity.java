@@ -1,5 +1,9 @@
 package com.sportcitizen.sportcitizen.activities;
 
+/**
+ * Created by Axel Drozdzynski
+ */
+
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.ContentResolver;

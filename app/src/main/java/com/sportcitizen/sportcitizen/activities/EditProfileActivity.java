@@ -1,5 +1,9 @@
 package com.sportcitizen.sportcitizen.activities;
 
+/**
+ * Created by Axel Drozdzynski
+ */
+
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.support.v7.app.AppCompatActivity;

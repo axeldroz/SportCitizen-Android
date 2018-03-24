@@ -2,6 +2,7 @@ package com.sportcitizen.sportcitizen.viewholders;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,7 +37,9 @@ public class ProfileViewHolder {
         ImageView image;
         Transformation transformation;
 
+        Log.d("PHOTOURL", url);
         image = _mainView.findViewById(R.id.profile_view_image);
+        Log.d("Image", image != null ? "ok" : null);
         transformation = new RoundedTransformationBuilder()
                 .borderColor(Color.WHITE)
                 .borderWidthDp(1)

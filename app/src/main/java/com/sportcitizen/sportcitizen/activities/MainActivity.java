@@ -1,5 +1,9 @@
 package com.sportcitizen.sportcitizen.activities;
 
+/**
+ * Created by Axel Drozdzynski on 23/03/2018.
+ */
+
 //import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;

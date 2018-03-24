@@ -1,18 +1,22 @@
 package com.sportcitizen.sportcitizen.viewholders;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.sportcitizen.sportcitizen.activities.NotificationReplyActivity;
 import com.sportcitizen.sportcitizen.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 /**
- * Created by axeldroz on 23/03/2018.
+ * Created by Axel Drozdzynski on 23/03/2018.
  */
 
 public class NotificationsViewHolder extends RecyclerView.ViewHolder {
@@ -61,5 +65,21 @@ public class NotificationsViewHolder extends RecyclerView.ViewHolder {
                 .fit()
                 .transform(transformation)
                 .into(image);
+    }
+
+    public void setOnClick(final Activity context, final String notifId, final String userId) {
+        LinearLayout layout;
+
+        layout = _view.findViewById(R.id.cell_cards_notification_layout);
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, NotificationReplyActivity.class);
+                intent.putExtra("notifId", notifId);
+                intent.putExtra("userId", userId);
+                context.startActivity(intent);
+            }
+        });
+
     }
 }

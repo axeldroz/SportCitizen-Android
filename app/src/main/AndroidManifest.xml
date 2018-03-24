@@ -29,7 +29,7 @@
             android:name=".activities.EditProfileActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activities.CreateChallengeActivity" />
-        <activity android:name=".NotificationReplyActivity"></activity>
+        <activity android:name=".activities.NotificationReplyActivity"></activity>
     </application>
 
 </manifest>

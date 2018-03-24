@@ -35,7 +35,8 @@ public class NotificationsAdapter extends FirebaseRecyclerAdapter<NotificationMo
 
         viewHolder.setDescription(model.message);
         dbRef = _userRef.child(model.from_id);
-        dbRef.addValueEventListener(new ProfileEventListenerForNotif(viewHolder));
+        dbRef.addValueEventListener(new ProfileEventListenerForNotif(_context, viewHolder));
+        viewHolder.setOnClick(_context, model.notif_id, model.from_id);
     }
 
     private void initDatabaseRef() {

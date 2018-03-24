@@ -1,5 +1,6 @@
 package com.sportcitizen.sportcitizen.dbutils;
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -16,10 +17,12 @@ import com.sportcitizen.sportcitizen.viewholders.ProfileViewHolder;
 
 public class ProfileEventListenerForNotif implements ValueEventListener {
     private NotificationsViewHolder _holder;
+    private Activity _context;
 
-    public ProfileEventListenerForNotif(NotificationsViewHolder holder) {
+    public ProfileEventListenerForNotif(Activity context, NotificationsViewHolder holder) {
         super();
         _holder = holder;
+        _context = context;
     }
 
     @Override

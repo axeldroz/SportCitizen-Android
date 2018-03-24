@@ -52,4 +52,17 @@ public class NotificationModel {
 
         ref.updateChildren(values);
     }
+
+    /**
+     * Copy value of an other model
+     */
+    @Exclude
+    public void copy(NotificationModel model) {
+        chall_id = model.chall_id;
+        date = model.date;
+        from_id = model.from_id;
+        message = model.message;
+        notif_id = model.notif_id;
+        type = model.type;
+    }
 }
