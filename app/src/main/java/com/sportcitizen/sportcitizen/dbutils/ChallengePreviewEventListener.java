@@ -31,6 +31,7 @@ public class ChallengePreviewEventListener implements ValueEventListener {
         _holder.setTime(model.time);
         _holder.setDescription(model.description);
         _holder.setPhone(model.phone);
+        _holder.setOnclickJoinButton(model);
     }
 
     @Override

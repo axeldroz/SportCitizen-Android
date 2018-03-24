@@ -7,14 +7,20 @@ package com.sportcitizen.sportcitizen.viewholders;
 import android.app.Activity;
 import android.graphics.Color;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.sportcitizen.sportcitizen.R;
+import com.sportcitizen.sportcitizen.models.ChallengeModel;
+import com.sportcitizen.sportcitizen.models.NotificationModel;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -30,11 +36,16 @@ public class ChallengePreviewViewHolder {
     private View _mainView;
     private DatabaseReference _ref;
     private Activity _activity;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference _databaseRef;
+    private FirebaseUser _user;
+    private DatabaseReference _dbRef;
 
     public ChallengePreviewViewHolder(View view, DatabaseReference ref, Activity activity) {
         _mainView = view;
         _ref = ref;
         _activity = activity;
+        initDatabaseRef();
     }
 
     public void setImage(String url) {
@@ -140,5 +151,47 @@ public class ChallengePreviewViewHolder {
 
         text = _mainView.findViewById(R.id.challenge_view_phone_text);
         text.setText(value);
+    }
+
+    public void setOnclickJoinButton(final ChallengeModel challenge) {
+        final Button button = _mainView.findViewById(R.id.challenge_view_join_button);
+        NotificationModel model = new NotificationModel();
+
+        final DatabaseReference ref = _dbRef.child(challenge.creator_user).child("notifications");
+        model.chall_id = challenge.chall_id;
+        model.date = "";
+        model.from_id = _user.getUid();
+        model.message = _user.getDisplayName() + " wants to join " + challenge.title;
+        model.notif_id = ref.push().getKey();
+        model.type = "joinchall";
+
+        final NotificationModel constModel = model;
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                constModel.updateToDB(ref.child(constModel.notif_id));
+                button.setText("Requested");
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * Initalise firebase
+     */
+    private void initDatabaseRef() {
+        _user = FirebaseAuth.getInstance().getCurrentUser();
+        try {
+            mDatabase = FirebaseDatabase.getInstance();
+        } catch (Exception e) {
+            Log.d("Exception", e.getMessage());
+        }
+        _databaseRef = mDatabase.getReference();
+        _dbRef = mDatabase.getReference("users");
     }
 }

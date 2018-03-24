@@ -4,16 +4,22 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.sportcitizen.sportcitizen.R;
 import com.sportcitizen.sportcitizen.activities.MainActivity;
 import com.sportcitizen.sportcitizen.models.ChallengeModel;
+import com.sportcitizen.sportcitizen.models.NotificationModel;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -26,6 +32,7 @@ import java.util.Locale;
 
 public class FeedViewHolder extends RecyclerView.ViewHolder {
     private View _view;
+
     public FeedViewHolder(View itemView) {
         super(itemView);
         _view = itemView;
