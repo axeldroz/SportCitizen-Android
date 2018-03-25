@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.sportcitizen.sportcitizen.R;
 import com.sportcitizen.sportcitizen.models.ChallengeModel;
@@ -27,6 +29,11 @@ public class FeedAdapter extends FirebaseRecyclerAdapter<ChallengeModel, FeedVie
 
     @Override
     protected void populateViewHolder(FeedViewHolder holder, ChallengeModel model, int position) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        /*if (model.creator_user.equals(user.getUid()))
+            holder.hide();
+        else {*/
             holder.setTitle(model.title);
             holder.setDescription(model.description);
             holder.setImage(model.photoURL);
@@ -34,15 +41,10 @@ public class FeedAdapter extends FirebaseRecyclerAdapter<ChallengeModel, FeedVie
             holder.setDay(model.time);
             holder.setTime(model.time);
             holder.setBackgroundColor(Color.parseColor("#efe7e0"));
-            holder.setOnclick(_context, model);
-            /*holder.getView().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    MenuItem item = ((MainActivity)_context).getMenu().getItem(0);
-                    ((MainActivity)_context).addItemInStack(item);
-                    ((MainActivity)_context).back(4);
-                }
-            });*/
+            if (model.creator_user.equals(user.getUid()))
+                holder.setOnclick(_context, model, "me");
+            else
+                holder.setOnclick(_context, model);
             Log.d("creator_user", model.creator_user);
     }
 }

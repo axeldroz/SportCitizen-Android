@@ -91,6 +91,9 @@ public class ChallengePreviewViewFragment extends Fragment {
             _holder.hideButtonJoin();
             _holder.showPhoneNumber();
         }
+        else if (mParam1.equals("me")) {
+            _holder.hideButtonJoin();
+        }
         setChallengeInfoListener(_holder);
         return (view);
     }

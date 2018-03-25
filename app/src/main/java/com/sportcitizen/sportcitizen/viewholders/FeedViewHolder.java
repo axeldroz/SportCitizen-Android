@@ -7,8 +7,10 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,6 +38,23 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
     public FeedViewHolder(View itemView) {
         super(itemView);
         _view = itemView;
+    }
+
+    private void setMargins (View view, int left, int top, int right, int bottom) {
+        if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+            p.setMargins(left, top, right, bottom);
+            view.requestLayout();
+        }
+    }
+
+    public void hide() {
+        LinearLayout layout;
+
+        layout = _view.findViewById(R.id.cell_feed_layout);
+        layout.setPadding(0,0,0,0);
+        setMargins(layout,0, 0, 0, 0);
+        layout.setVisibility(View.GONE);
     }
 
     public void setTitle(String title) {
