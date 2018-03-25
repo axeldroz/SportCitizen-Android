@@ -153,13 +153,20 @@ public class ChallengePreviewViewHolder {
         text.setText(value);
     }
 
+    private String getDate() {
+        Calendar calendar;
+
+        calendar = Calendar.getInstance();
+        return (calendar.getTimeInMillis() + "");
+    }
+
     public void setOnclickJoinButton(final ChallengeModel challenge) {
         final Button button = _mainView.findViewById(R.id.challenge_view_join_button);
         NotificationModel model = new NotificationModel();
 
         final DatabaseReference ref = _dbRef.child(challenge.creator_user).child("notifications");
         model.chall_id = challenge.chall_id;
-        model.date = "";
+        model.date = getDate();
         model.from_id = _user.getUid();
         model.message = _user.getDisplayName() + " wants to join " + challenge.title;
         model.notif_id = ref.push().getKey();
