@@ -4,11 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.sportcitizen.sportcitizen.activities.NotificationReplyActivity;
 import com.sportcitizen.sportcitizen.R;
@@ -80,6 +85,34 @@ public class NotificationsViewHolder extends RecyclerView.ViewHolder {
                 context.startActivity(intent);
             }
         });
+    }
 
+    public void setOnClick(final Activity context, final String notifId, final String userId, String type) {
+        LinearLayout layout;
+
+        layout = _view.findViewById(R.id.cell_cards_notification_layout);
+        if (type.equals("joinchall")) {
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, NotificationReplyActivity.class);
+                    intent.putExtra("notifId", notifId);
+                    intent.putExtra("userId", userId);
+                    context.startActivity(intent);
+                }
+            });
+        } else {
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseDatabase mDatabase;
+                    mDatabase = FirebaseDatabase.getInstance();
+                    DatabaseReference mDatabaseRef = mDatabase.getReference();
+                    DatabaseReference dbRef = mDatabase.getReference("users").child(user.getUid());
+                    dbRef.child("notifications").child(notifId).removeValue();
+                }
+            });
+        }
     }
 }
