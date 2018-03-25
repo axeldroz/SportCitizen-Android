@@ -2,6 +2,7 @@ package com.sportcitizen.sportcitizen.models;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
+import com.sportcitizen.sportcitizen.dbutils.NotificationEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,5 +65,16 @@ public class NotificationModel {
         message = model.message;
         notif_id = model.notif_id;
         type = model.type;
+    }
+
+    /**
+     * fetch from db
+     */
+    @Exclude
+    public boolean fetchData(DatabaseReference ref) {
+        if (ref == null)
+            return (false);
+        ref.addListenerForSingleValueEvent(new NotificationEventListener(this));
+        return (true);
     }
 }

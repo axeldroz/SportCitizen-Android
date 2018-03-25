@@ -2,6 +2,8 @@ package com.sportcitizen.sportcitizen.models;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
+import com.sportcitizen.sportcitizen.dbutils.NotificationEventListener;
+import com.sportcitizen.sportcitizen.dbutils.UserEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,5 +71,16 @@ public class UserModel {
         city = model.city;
         age = model.age;
         phone = model.phone;
+    }
+
+    /**
+     * fetch from db
+     */
+    @Exclude
+    public boolean fetchData(DatabaseReference ref) {
+        if (ref == null)
+            return (false);
+        ref.addListenerForSingleValueEvent(new UserEventListener(this));
+        return (true);
     }
 }

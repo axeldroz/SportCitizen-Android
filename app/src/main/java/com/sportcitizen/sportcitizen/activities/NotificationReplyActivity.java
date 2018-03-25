@@ -35,6 +35,8 @@ public class NotificationReplyActivity extends AppCompatActivity {
     private FirebaseUser _user;
     private DatabaseReference _dbRef;
 
+    final NotificationModel _notification = new NotificationModel();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
         initDatabaseRef();
         _notifId = getIntent().getExtras().getString("notifId");
         _userId = getIntent().getExtras().getString("userId");
+        _notification.fetchData(_dbRef.child("notifications").child(_notifId));
         Log.d("_notifId", (_notifId != null) ? _notifId : "null");
         initButton();
         initFragment();
@@ -64,10 +67,28 @@ public class NotificationReplyActivity extends AppCompatActivity {
      * add onclick event on Accept Button
      */
     private void addAcceptClick() {
+        if (_notifId == null)
+            return;
+        final Activity self = this;
+
+
         _accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                NotificationModel acceptModel = new NotificationModel();
+                DatabaseReference ref = mDatabase.getReference("users").child(_notification.from_id).child("notifications");
 
+                acceptModel.notif_id = ref.push().getKey();
+                acceptModel.message = _user.getDisplayName() + " accepted you in his challenge";
+                acceptModel.chall_id = _notification.chall_id;
+                Log.d("CHallID", acceptModel.chall_id);
+                acceptModel.date = "";
+                acceptModel.from_id = _user.getUid();
+                acceptModel.type = "answer";
+                acceptModel.updateToDB(ref.child(acceptModel.notif_id));
+                mDatabase.getReference("users").child(_notification.from_id).child("my_challenges").child(acceptModel.chall_id).setValue(acceptModel.chall_id);
+                ref.child(_notification.notif_id).removeValue();
+                self.finish();
             }
         });
     }
@@ -85,6 +106,16 @@ public class NotificationReplyActivity extends AppCompatActivity {
         _decline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                NotificationModel declineModel = new NotificationModel();
+                DatabaseReference ref2 = mDatabase.getReference("users").child(_notification.from_id).child("notifications");
+
+                declineModel.notif_id = ref2.push().getKey();
+                declineModel.message = _user.getDisplayName() + " decline your apply. Sorry.";
+                declineModel.chall_id = _notification.chall_id;
+                declineModel.date = "";
+                declineModel.from_id = _user.getUid();
+                declineModel.type = "answer";
+                declineModel.updateToDB(ref2.child(declineModel.notif_id));
                 ref.removeValue();
                 self.finish();
             }
