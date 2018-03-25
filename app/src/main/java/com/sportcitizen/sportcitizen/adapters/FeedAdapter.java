@@ -17,9 +17,6 @@ import com.sportcitizen.sportcitizen.viewholders.FeedViewHolder;
  */
 
 public class FeedAdapter extends FirebaseRecyclerAdapter<ChallengeModel, FeedViewHolder> {
-
-    private int _count;
-    private LayoutInflater _layoutinflater;
     private Activity _context;
 
     public FeedAdapter(DatabaseReference ref, Activity context) {
