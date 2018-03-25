@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -86,7 +87,9 @@ public class NotificationsFragment extends Fragment {
         ref = _dbRef;
         view = inflater.inflate(R.layout.fragment_notifications, container, false);
         recyclerView = view.findViewById(R.id.notification_recycler_view);
-        recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 1));
+        LinearLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 1);
+        layoutManager.setReverseLayout(true);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new NotificationsAdapter(ref, this.getActivity()));
         return (view);
     }
