@@ -84,10 +84,10 @@ public class NotificationReplyActivity extends AppCompatActivity {
                 Log.d("CHallID", acceptModel.chall_id);
                 acceptModel.date = "";
                 acceptModel.from_id = _user.getUid();
-                acceptModel.type = "answer";
+                acceptModel.type = "challaccept";
                 acceptModel.updateToDB(ref.child(acceptModel.notif_id));
                 mDatabase.getReference("users").child(_notification.from_id).child("my_challenges").child(acceptModel.chall_id).setValue(acceptModel.chall_id);
-                ref.child(_notification.notif_id).removeValue();
+                _dbRef.child("notifications").child(_notifId).removeValue();
                 self.finish();
             }
         });
@@ -114,7 +114,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
                 declineModel.chall_id = _notification.chall_id;
                 declineModel.date = "";
                 declineModel.from_id = _user.getUid();
-                declineModel.type = "answer";
+                declineModel.type = "challdecline";
                 declineModel.updateToDB(ref2.child(declineModel.notif_id));
                 ref.removeValue();
                 self.finish();
