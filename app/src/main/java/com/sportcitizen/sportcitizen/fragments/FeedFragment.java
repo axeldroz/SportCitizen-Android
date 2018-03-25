@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
@@ -98,6 +99,7 @@ public class FeedFragment extends Fragment {
 
         ref = _dbRef;
         view = inflater.inflate(R.layout.fragment_feed, container, false);
+        initRefresh(view);
         recyclerView = view.findViewById(R.id.feed_recycler_view);
         initTitleBar();
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 1));
@@ -115,6 +117,20 @@ public class FeedFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(activity, CreateChallengeActivity.class);
                 activity.startActivity(intent);
+            }
+        });
+    }
+
+    /**
+     * init the refresh movement
+     */
+    public void initRefresh(View view) {
+        final SwipeRefreshLayout mySwipeToRefresh = view.findViewById(R.id.swipeRefreshLayout);
+        mySwipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                mySwipeToRefresh.setRefreshing(false);
             }
         });
     }
