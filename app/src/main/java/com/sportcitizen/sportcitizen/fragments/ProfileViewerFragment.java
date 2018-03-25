@@ -136,10 +136,6 @@ public class ProfileViewerFragment extends Fragment {
      * Initalise firebase
      */
     private void initDatabaseRef() {
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         _user = FirebaseAuth.getInstance().getCurrentUser();
         try {
             mDatabase = FirebaseDatabase.getInstance();
@@ -149,6 +145,7 @@ public class ProfileViewerFragment extends Fragment {
         mDatabaseRef = mDatabase.getReference();
         _dbRef = mDatabase.getReference("users").child(_user.getUid());
     }
+
     private void setProfileInfoListener(final ProfileViewHolder holder, DatabaseReference ref) {
         ref.addValueEventListener(new ProfileEventListener(holder));
     }

@@ -12,8 +12,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.sportcitizen.sportcitizen.R;
+import com.sportcitizen.sportcitizen.dbutils.ProfileEventListener;
 import com.sportcitizen.sportcitizen.fragments.ProfileViewerFragment;
+import com.sportcitizen.sportcitizen.models.NotificationModel;
+import com.sportcitizen.sportcitizen.viewholders.ProfileViewHolder;
 
 public class NotificationReplyActivity extends AppCompatActivity {
 
@@ -23,14 +30,20 @@ public class NotificationReplyActivity extends AppCompatActivity {
     private String _notifId = "";
     private String _userId = "";
 
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mDatabaseRef;
+    private FirebaseUser _user;
+    private DatabaseReference _dbRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_reply);
-        initButton();
+        initDatabaseRef();
         _notifId = getIntent().getExtras().getString("notifId");
         _userId = getIntent().getExtras().getString("userId");
         Log.d("_notifId", (_notifId != null) ? _notifId : "null");
+        initButton();
         initFragment();
     }
 
@@ -61,12 +74,19 @@ public class NotificationReplyActivity extends AppCompatActivity {
 
     /**
      * add onclick event on Accept Button
+     * remove notification
      */
     private void addDeclineClick() {
+        if (_notifId == null)
+            return;
+        final DatabaseReference ref = _dbRef.child("notifications").child(_notifId);
+        final Activity self = this;
+
         _decline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ref.removeValue();
+                self.finish();
             }
         });
     }
@@ -110,5 +130,17 @@ public class NotificationReplyActivity extends AppCompatActivity {
         return (loadFragment(fragment));
     }
 
-
+    /**
+     * Initalise firebase
+     */
+    private void initDatabaseRef() {
+        _user = FirebaseAuth.getInstance().getCurrentUser();
+        try {
+            mDatabase = FirebaseDatabase.getInstance();
+        }catch (Exception e) {
+            Log.d("Exception", e.getMessage());
+        }
+        mDatabaseRef = mDatabase.getReference();
+        _dbRef = mDatabase.getReference("users").child(_user.getUid());
+    }
 }
