@@ -440,6 +440,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
         _model.creator_user = _user.getUid();
         _model.photoURL = _userInfo.photoURL;
         _model.chall_id = ref.push().getKey();
+        _model.phone = _userInfo.phone;
         if (_model.location.equals("")) {
             getLocation();
         }

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.util.Log;
@@ -83,7 +84,7 @@ public class FeedFragment extends Fragment {
             Log.d("Exception", e.getMessage());
         }
         mDatabaseRef = mDatabase.getReference();
-        _dbRef = mDatabase.getReference("challenges");
+        _dbRef = mDatabase.getReference("challenges").orderByChild("time").getRef();
     }
 
     /**
@@ -102,7 +103,10 @@ public class FeedFragment extends Fragment {
         initRefresh(view);
         recyclerView = view.findViewById(R.id.feed_recycler_view);
         initTitleBar();
-        recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 1));
+        LinearLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 1);
+        layoutManager.setReverseLayout(true);
+        //layoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new FeedAdapter(ref, this.getActivity()));
         return (view);
     }
