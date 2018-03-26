@@ -87,8 +87,9 @@ public class NotificationsFragment extends Fragment {
         ref = _dbRef;
         view = inflater.inflate(R.layout.fragment_notifications, container, false);
         recyclerView = view.findViewById(R.id.notification_recycler_view);
-        LinearLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 1);
+        GridLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 1);
         layoutManager.setReverseLayout(true);
+        //layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new NotificationsAdapter(ref, this.getActivity()));
         return (view);

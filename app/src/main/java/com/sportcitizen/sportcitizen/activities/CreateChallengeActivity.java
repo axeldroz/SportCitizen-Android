@@ -465,6 +465,9 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
         _model.location = _locationModel.city;
     }
 
+    /**
+     * When click on submit
+     */
     @Override
     public void sendData() {
         DatabaseReference ref;
@@ -474,7 +477,8 @@ public class CreateChallengeActivity extends AppCompatActivity implements Vertic
             fillModel();
             ref = _databaseRef.child("challenges").child(_model.chall_id);
             _model.updateToDB(ref);
-            mDatabase.getReference("users").child(_user.getUid()).child("my_challenges").child(_model.chall_id).setValue(_model.chall_id);
+            mDatabase.getReference("users").child(_user.getUid()).child("my_challenges")
+                    .child(_model.chall_id).setValue(_model.chall_id);
             this.finish();
         }
         else

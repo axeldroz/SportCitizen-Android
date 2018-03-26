@@ -22,6 +22,8 @@ import com.sportcitizen.sportcitizen.fragments.ProfileViewerFragment;
 import com.sportcitizen.sportcitizen.models.NotificationModel;
 import com.sportcitizen.sportcitizen.viewholders.ProfileViewHolder;
 
+import java.util.Calendar;
+
 public class NotificationReplyActivity extends AppCompatActivity {
 
     private Button _accept;
@@ -64,6 +66,17 @@ public class NotificationReplyActivity extends AppCompatActivity {
     }
 
     /**
+     * get Actual timestamp
+     * @return
+     */
+    private String getDate() {
+        Calendar calendar;
+
+        calendar = Calendar.getInstance();
+        return (calendar.getTimeInMillis() + "");
+    }
+
+    /**
      * add onclick event on Accept Button
      */
     private void addAcceptClick() {
@@ -82,11 +95,12 @@ public class NotificationReplyActivity extends AppCompatActivity {
                 acceptModel.message = _user.getDisplayName() + " accepted you in his challenge";
                 acceptModel.chall_id = _notification.chall_id;
                 Log.d("CHallID", acceptModel.chall_id);
-                acceptModel.date = "";
+                acceptModel.date = getDate();
                 acceptModel.from_id = _user.getUid();
                 acceptModel.type = "challaccept";
                 acceptModel.updateToDB(ref.child(acceptModel.notif_id));
-                mDatabase.getReference("users").child(_notification.from_id).child("my_challenges").child(acceptModel.chall_id).setValue(acceptModel.chall_id);
+                mDatabase.getReference("users").child(_notification.from_id).child("my_challenges")
+                        .child(acceptModel.chall_id).setValue(acceptModel.chall_id);
                 _dbRef.child("notifications").child(_notifId).removeValue();
                 self.finish();
             }
@@ -112,7 +126,7 @@ public class NotificationReplyActivity extends AppCompatActivity {
                 declineModel.notif_id = ref2.push().getKey();
                 declineModel.message = _user.getDisplayName() + " decline your apply. Sorry.";
                 declineModel.chall_id = _notification.chall_id;
-                declineModel.date = "";
+                declineModel.date = getDate();
                 declineModel.from_id = _user.getUid();
                 declineModel.type = "challdecline";
                 declineModel.updateToDB(ref2.child(declineModel.notif_id));

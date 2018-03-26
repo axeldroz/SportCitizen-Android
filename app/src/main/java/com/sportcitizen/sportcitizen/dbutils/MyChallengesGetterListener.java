@@ -11,7 +11,7 @@ import com.sportcitizen.sportcitizen.models.ChallengeModel;
 import com.sportcitizen.sportcitizen.viewholders.FeedViewHolder;
 
 /**
- * Created by axeldroz on 23/03/2018.
+ * Created by Axel Drozdzynski on 23/03/2018.
  */
 
 public class MyChallengesGetterListener implements ValueEventListener {
