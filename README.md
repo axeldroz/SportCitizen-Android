@@ -2,7 +2,7 @@
 
 <p>Sport Citizen is a social application.</p>
 
-<p>Dates : February 5th 2018 to February 11th 2018<br/>
+<p>Dates : February 2018 to April 2018<br/>
 </p>
 
 ## Project :
